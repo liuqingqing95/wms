@@ -1,0 +1,47 @@
+@import "config.less";
+.error {
+  text-align: center;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  .error404 {
+    background: url("../../images/404.png") no-repeat;
+    width: 439px;
+    height: 300px;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .error500 {
+    background: url("../../images/500.png") no-repeat;
+    width: 439px;
+    height: 299px;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .error403 {
+    background: url("../../images/403.png") no-repeat;
+    width: 248px;
+    height: 249px;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .error-update {
+    background: url("../../images/update.png") no-repeat;
+    width: 452px;
+    height: 449px;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .return-home {
+    font-size: 16px;
+    margin-top: 10px;
+    .home {
+      padding-bottom: 2px;
+      margin-left: 5px;
+      color: @blue;
+      border-bottom: 1px solid @blue;
+    }
+  }
+}

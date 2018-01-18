@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" href="../fonts/iconfont.css">
+    <link rel="stylesheet" href="../css/build/public.css">
+    <link rel="stylesheet" href="../css/build/layout.css">
+    <link rel="stylesheet" href="../libs/element-ui/lib/theme-default/index.css">
+    <link rel="stylesheet" href="../css/build/index.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="header">
+            <div class="layout-left" :class="collapsed ? 'shrink':''">
+                <div class="logo"></div>
+                <a href="" class="InWMS">InWMS</a>
+            </div>
+            <i class="iconfont icon-toggle" @click="collapse"></i>
+            <div class="layout-right">
+                <a><i class="iconfont icon-search"></i></a>
+                <a><i class="iconfont icon-notice"></i></a>
+                <a><i class="iconfont icon-skin"></i></a>
+                <el-dropdown class="user-info">
+                    <div class="el-dropdown-link">
+                        <img class="user-img" src="../images/default_account_img.png">
+                        <p>{{user.name}}</p>
+                        <i class="el-icon-arrow-down el-icon-right"></i>
+                    </div>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>用户管理</el-dropdown-item>
+                        <el-dropdown-item @click.native="logout">退出账号</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+        </div>
+        <div class="page">
+            <el-menu default-active="0" class="left-menu" unique-opened :class="collapsed?'menu-collapsed':'menu-expanded'" @open="handleOpen" @close="handleClose" :collapse="collapsed">
+                <template v-for="(item,index) in menuList"  v-if="!item.hidden">
+                    <el-submenu :index="index+''" v-if="item.leaf">
+                        <template slot="title">
+                            <i :class="item.iconCls"></i><span slot="title" class="title">{{item.name}}</span>
+                        </template>
+                        <el-menu-item v-for="(child,i) in item.children" :index="index+'-'+i" :key="child.path" v-if="!child.hidden">
+                            <a :href="'#'+child.path">{{child.name}}</a></el-menu-item>
+                    </el-submenu>
+                    <el-menu-item v-if="!item.leaf" :index="index+''">
+                        <i :class="item.iconCls"></i><a :href="'#'+item.path" slot="title" class="title">{{item.name}}</a>
+                    </el-menu-item>
+                </template>
+            </el-menu>
+            <div class="page-content" :class="collapsed ? 'shrink':''">
+                <div class="main-content">
+                    <div class="page-title">控制台</div>
+                    <el-form :inline="true" :model="formInline" class="form-search mt20" label-width="80px">
+                        <el-form-item label="审批人" size="small">
+                            <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+                        </el-form-item>
+                        <el-form-item label="活动区域" size="small">
+                            <el-select v-model="formInline.region" placeholder="活动区域">
+                                <el-option label="区域一" value="shanghai"></el-option>
+                                <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                        </el-form-item><el-form-item>
+                        <el-button type="primary" class="wid100" @click="onSubmit">查询</el-button>
+                    </el-form-item>
+                    </el-form>
+                </div>
+                <div class="footer">
+                    Copyright©2009-2017 上海鹰谷信息科技有限公司版权所有 沪ICP备13029136号
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
+<script src="../libs/jquery.min.js"></script>
+<script src="../libs/vue.js"></script>
+<script src="../libs/element-ui/lib/index.js"></script>
+
+<script src="../libs/echarts.min.js"></script>
+<!--<script src="../libs/zrender.min.js"></script>-->
+<script src="../js/build/public.js"></script>
+
+<script>
+    //计算页面最小高度，使得footer置于页面底部，140为页面头部、尾部高度之和
+    /*  $(document).ready(function(){
+          $(".main-content").css({minHeight: $(window).height() - 60})
+      });
+      $(window).resize(function(){
+          $(".main-content").css({minHeight: $(window).height() - 60})
+      });*/
+</script>
+</body>
+</html>

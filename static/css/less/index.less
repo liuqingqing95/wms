@@ -1,0 +1,81 @@
+@import "config.less";
+
+.part1 {
+  .el-col-6 {
+    &:nth-child(1) {
+      .iconfont {
+        background-color: #1388FF;
+      }
+      .el-col-6 i {
+        color: #1388FF;
+      }
+    }
+    &:nth-child(2) {
+      .iconfont {
+        background-color: #09C2AA;
+      }
+      .el-col-6 i  {
+        color: #09C2AA;
+      }
+    }
+    &:nth-child(3) {
+      .iconfont {
+        background-color: #1CBE4E;
+      }
+      .el-col-6 i {
+        color: #1CBE4E;
+      }
+    }
+    &:nth-child(4) {
+      .iconfont {
+        background-color: #FCB200;
+      }
+      .el-col-6 i {
+        color: #FCB200;
+      }
+    }
+    .el-col-6 {
+      color: @gray;
+    }
+  }
+  .grid-content {
+    padding: 20px 15px;
+    border: 1px solid @borderColor;
+    .iconfont {
+      margin-right: 0px;
+      padding: 10px;
+      color: #fff!important;
+      border-radius: 50%;
+    }
+    i {
+     font-size: 16px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
+
+.portlet {
+  border: 1px solid @borderColor;
+  .portlet-title {
+    padding: 10px 20px;
+    border-bottom: 1px solid @borderColor;
+    a {
+      color: @black;
+    }
+  }
+  .portlet-body {
+    padding: 20px;
+    height: 200px;
+  }
+  .echarts1 {
+    height: 400px;
+  }
+}
+.part2 .el-col-6 {
+  padding-right: 20px;
+  &:last-child {
+    padding-right: 0px;
+  }
+}
