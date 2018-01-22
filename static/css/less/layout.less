@@ -269,25 +269,25 @@
       position: relative;
       top: -2px;
     }
-    .el-icon-arrow-down {
+    /*.el-icon-arrow-down {
       -ms-transform: none!important;
       transform: none!important;
       &:before {
         content: "\E602";
       }
-    }
+    }*/
     &:hover {
       background: @item-bg-hover
     }
   }
 
-  .is-opened {
+  /*.is-opened {
     .el-icon-arrow-down {
       &:before {
         content: "\E600";
       }
     }
-  }
+  }*/
 
   .title{
     color: @black;
@@ -344,41 +344,39 @@
   }
 }
 
-.menu-collapsed {
+.left-menu.el-menu--collapse {
   width: 64px;
-  &.el-menu--collapse {
-    .el-submenu {
-      outline: none;
-      .el-menu {
-        background-color: #fff;
-        border: 1px solid @borderColor;
-        box-shadow: 0px 4px 9px rgba(0,0,0,.1);
-        .el-menu-item {
-          height: auto;
-          line-height: normal;
-          padding: 0!important;
-          min-width: 60px;
+  .el-submenu {
+    outline: none;
+    .el-menu {
+      background-color: #fff;
+      border: 1px solid @borderColor;
+      box-shadow: 0px 4px 9px rgba(0,0,0,.1);
+      .el-menu-item {
+        height: auto;
+        line-height: normal;
+        padding: 0!important;
+        min-width: 60px;
+        a {
+          color: @black;
+          display: block;
+          height: 40px;
+          line-height: 40px;
+          padding: 0 30px!important;
+        }
+        &:hover {
+          background-color: #f3f9ff;
+        }
+        &.is-active {
+          background-color: #f3f9ff;
           a {
-            color: @black;
-            display: block;
-            height: 40px;
-            line-height: 40px;
-            padding: 0 30px!important;
-          }
-          &:hover {
-            background-color: #f3f9ff;
-          }
-          &.is-active {
-            background-color: #f3f9ff;
-            a {
-              color: @blue;
-            }
+            color: @blue;
           }
         }
       }
-      &.is-active .el-submenu__title {
-        background: #e9edf2;
-      }
+    }
+    &.is-active .el-submenu__title {
+      background: #e9edf2;
     }
   }
 }

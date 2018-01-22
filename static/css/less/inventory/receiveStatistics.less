@@ -1,0 +1,32 @@
+@import "../config.less";
+.analyze-data {
+  border: 1px solid @borderColor;
+  padding: 20px;
+}
+.echarts {
+  border-top: 1px solid @borderColor;
+  height: 400px;
+}
+
+.tab {
+  .el-button {
+    border: 1px solid @borderColor;
+    color: @gray;
+  }
+  .active {
+    border: 1px solid @blue;
+    background-color: rgb(220, 237, 255);
+    color: @blue;
+  }
+  .iconfont {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+  .el-button-group .el-button:not(:last-child) {
+    margin-right: 0px;
+  }
+}
+
+.table {
+  border-top: 0px;
+}
