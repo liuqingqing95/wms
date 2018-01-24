@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>试剂入库</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/reagentPutIn/reagentPutIn.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="page-title">试剂入库</div>
+        <el-form class="search-form mt20" :model="searchForm" label-width="80px"  :inline="true" size="small">
+            <el-form-item label="试剂条码" prop="name">
+                <el-input v-model="searchForm.number" placeholder="请输入试剂条码"></el-input>
+            </el-form-item>
+            <el-form-item label="中文名称">
+                <el-input v-model="searchForm.name" placeholder="请输入中文名称"></el-input>
+            </el-form-item>
+            <el-form-item label="CAS号">
+                <el-input v-model="searchForm.cas" placeholder="请输入CAS号"></el-input>
+            </el-form-item>
+            <!--<el-form-item label="纯度" prop="name">
+                <el-input v-model="searchForm.number" placeholder="请选择纯度"></el-input>
+            </el-form-item>
+            <el-form-item label="中文名称">
+                <el-input v-model="searchForm.name" placeholder="请输入中文名称"></el-input>
+            </el-form-item>
+            <el-form-item label="CAS号">
+                <el-input v-model="searchForm.cas" placeholder="请输入CAS号"></el-input>
+            </el-form-item>-->
+        </el-form>
+        <div>
+            <el-button type="primary" icon="el-icon-plus" size="small">试剂入库</el-button>
+            <el-button class="blue-btn" icon="el-icon-circle-plus" size="small">批量入库</el-button>
+            <el-button class="blue-btn" icon="iconfont icon-barcode mr5" size="small">条码上架</el-button>
+
+            <el-button-group class="ml10">
+                <el-button class="blue-btn" icon="iconfont icon-putaway mr5" size="small">上架</el-button>
+                <el-button class="blue-btn" icon="iconfont icon-print mr5" size="small">打印条码</el-button>
+            </el-button-group>
+
+            <div class="part-right">
+                <el-button type="text" icon="iconfont icon-shrink mr5" size="small">高级搜索</el-button>
+                <form class="search-box">
+                    <el-input placeholder="请输入内容" size="small"></el-input>
+                    <el-button type="primary" size="small" icon="el-icon-search"></el-button>
+                </form>
+                <el-button-group>
+                    <el-button class="blue-btn" icon="iconfont icon-export" size="small"></el-button>
+                    <el-button class="blue-btn" icon="iconfont icon-filter-field" size="small"></el-button>
+                    <el-button class="blue-btn" icon="iconfont icon-refresh" size="small"></el-button>
+                </el-button-group>
+            </div>
+        </div>
+
+
+        <el-table :data="reagentData" stripe class="table mt20 text-center">
+            <el-table-column
+                    type="selection"
+                    width="40">
+            </el-table-column>
+            <el-table-column label="试剂条码">
+                <template slot-scope="scope">
+                    <a href="">{{ scope.row.number }}</a>
+                </template>
+            </el-table-column>
+            <el-table-column label="名称">
+                <template slot-scope="scope">
+                    {{ scope.row.name }}
+                </template>
+            </el-table-column>
+            <el-table-column label="CAS号">
+                <template slot-scope="scope">
+                    {{ scope.row.cas }}
+                </template>
+            </el-table-column>
+            <el-table-column label="ICS号">
+                <template slot-scope="scope">
+                    {{ scope.row.ics }}
+                </template>
+            </el-table-column>
+            <el-table-column label="入库净量">
+                <template slot-scope="scope">
+                    {{ scope.row.netWeight}}
+                </template>
+            </el-table-column>
+            <el-table-column label="当前量">
+                <template slot-scope="scope">
+                    {{ scope.row.currentWeight}}
+                </template>
+            </el-table-column>
+            <el-table-column label="纯度">
+                <template slot-scope="scope">
+                    {{ scope.row.purity}}
+                </template>
+            </el-table-column>
+            <el-table-column label="规格">
+                <template slot-scope="scope">
+                    {{ scope.row.specification}}
+                </template>
+            </el-table-column>
+            <el-table-column label="仓库">
+                <template slot-scope="scope">
+                    {{ scope.row.warehouse}}
+                </template>
+            </el-table-column>
+            <el-table-column label="入库日期">
+                <template slot-scope="scope">
+                    {{ scope.row.date}}
+                </template>
+            </el-table-column>
+            <el-table-column label="入库状态">
+                <template slot-scope="scope">
+                    {{ scope.row.statue}}
+                </template>
+            </el-table-column>
+            <el-table-column>
+                <template slot-scope="scope">
+                    <i class="iconfont icon-edit1"></i>
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-pagination
+                       @size-change="handleSizeChange"
+                       @current-change="handleCurrentChange"
+                       :current-page="pagination.currentPage"
+                       :page-sizes="pagination.pageSizes"
+                       :page-size="pagination.pageSize"
+                       layout="total, prev, pager, next, sizes, jumper"
+                       :total="pagination.pageTotal">
+        </el-pagination>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/reagentPutIn/reagentPutIn.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+@import "../config.less";
+.icon-barcode, .icon-putaway {
+  font-size: 12px;
+}
+.icon-print {
+  font-size: 14px;
+}
+.el-button-group {
+  vertical-align: top;
+}
+
+.el-form-item--small .el-form-item__content {
+  width: 300px;
+}
+
+.part-right {
+  float: right;
+  .el-button, .search-box {
+    margin-right: 5px;
+    float: left;
+  }
+  .icon-export, .icon-refresh {
+    font-size: 12px;
+  }
+  .icon-filter-field {
+    font-weight: bold;
+    font-size: 14px;
+  }
+}
+
+.table {
+  .el-table__row .icon-edit1 {
+    visibility: hidden;
+    color: @blue;
+  }
+  .el-table__row:hover .icon-edit1 {
+    visibility: visible;
+  }
+}

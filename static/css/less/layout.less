@@ -269,25 +269,25 @@
       position: relative;
       top: -2px;
     }
-    .el-icon-arrow-down {
+   /* .el-icon-arrow-down {
       -ms-transform: none!important;
       transform: none!important;
       &:before {
         content: "\E602";
       }
-    }
+    }*/
     &:hover {
       background: @item-bg-hover
     }
   }
 
-  .is-opened {
+ /* .is-opened {
     .el-icon-arrow-down {
       &:before {
         content: "\E600";
       }
     }
-  }
+  }*/
 
   .title{
     color: @black;
@@ -545,6 +545,9 @@
 @table-row-hover-bg: #dcedff;
 .el-table {
   color: @black;
+  &.text-center th {
+    text-align: center;
+  }
 }
 .table {
   width: 100%;
