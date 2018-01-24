@@ -227,6 +227,9 @@ a {
   font-size: 16px;
   color: #ff6c00;
 }
+.el-button--text {
+  color: @blue;
+}
 .el-button--primary {
   background-color: @blue;
   border-color: @blue;
@@ -538,7 +541,8 @@ a {
 @footerBorder: #e5e5e5;
 .el-pagination {
   margin-top: 20px;
-  text-align: center;
+  text-align: right;
+  padding: 0px;
   .btn-prev, .btn-next {
     border: 1px solid @footerBorder;
     height: 30px;
@@ -595,7 +599,7 @@ a {
     }
   }
   .el-pagination__total {
-    margin-left: 10px;
+    float: left;
     margin-right: 0px;
   }
 }
