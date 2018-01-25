@@ -174,7 +174,7 @@ var menuList = [{
     }]
 }];
 
-const reagentData = [{
+var reagentData = [{
     number: 'SJ1712200088',
     name: '一氧化碳',
     cas: '133-37-9',
@@ -186,7 +186,7 @@ const reagentData = [{
     warehouse: '第一大仓',
     date: '2017/10/05',
     statue: '已入库'
-},{
+}, {
     number: 'SJ1712200088',
     name: '一氧化碳',
     cas: '133-37-9',
@@ -198,7 +198,7 @@ const reagentData = [{
     warehouse: '第一大仓',
     date: '2017/10/05',
     statue: '已入库'
-},{
+}, {
     number: 'SJ1712200088',
     name: '一氧化碳',
     cas: '133-37-9',
@@ -210,7 +210,8 @@ const reagentData = [{
     warehouse: '第一大仓',
     date: '2017/10/05',
     statue: '已入库'
-}]
+}];
+
 new Vue({
     el: '#app',
     data: function data() {
@@ -225,7 +226,7 @@ new Vue({
             reagentData: reagentData,
             pagination: {
                 currentPage: 1,
-                pageSizes: [15,30,60],
+                pageSizes: [15, 30, 60],
                 pageSize: 15,
                 pageTotal: 20
             },
@@ -260,11 +261,15 @@ new Vue({
             console.log(key, keyPath);
         },
 
-        handleSizeChange(val) {
-            console.log(`每页 ${val} 条`);
+        handleSelect: function handleSelect(a, b) {},
+        showMenu: function showMenu(i, status) {
+            this.$refs.menuCollapsed.getElementsByClassName('iconfont-' + i)[0].style.display = status ? 'block' : 'none';
         },
-        handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
+        handleSizeChange: function handleSizeChange(val) {
+            console.log("\u6BCF\u9875 " + val + " \u6761");
+        },
+        handleCurrentChange: function handleCurrentChange(val) {
+            console.log("\u5F53\u524D\u9875: " + val);
         }
     }
 });
