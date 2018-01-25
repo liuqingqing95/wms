@@ -465,7 +465,10 @@
 /* footer end */
 .page-title {
   font-size: 18px;
- /* padding-left: 14px;
+}
+.line-title {
+  padding-left: 14px;
+  font-size: 16px;
   position: relative;
   margin-bottom: 0;
   &:before {
@@ -477,8 +480,9 @@
     background: #148fff;
     left: 0;
     top: 4px;
-  }*/
+  }
 }
+
 .el-button--default {
   background-color: #f9f9f9;
   border: 1px solid @borderColor;
@@ -668,11 +672,8 @@
     width: 280px;
   }
   .el-dialog__body {
-    display: flex;
-    flex-direction: column;
     box-sizing: border-box;
     min-height: 200px;
-    align-items: center;
   }
   .el-dialog__footer {
     padding-bottom: 40px;

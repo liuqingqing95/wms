@@ -7,22 +7,21 @@
     <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="../../css/build/layout.css">
     <link rel="stylesheet" href="../../css/build/public.css">
-
     <link rel="stylesheet" href="../../css/build/reagentPutIn/reagentPutIn.css">
 </head>
 <body>
 <div id="app">
     <template>
         <div class="page-title">试剂入库</div>
-        <el-form :class="[shrink ? '' : 'shrink', 'search-form mt20']" :model="searchForm" label-width="80px" :inline="true" size="small">
+        <el-form :class="[shrink ? '' : 'shrink', 'search-form mt20']" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
             <el-row>
                 <el-col :md="7" :lg="6" :xl="6">
-                    <el-form-item label="试剂条码" prop="name">
+                    <el-form-item label="试剂条码" prop="number">
                         <el-input v-model="searchForm.number" placeholder="请输入试剂条码"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :md="7" :lg="7" :xl="6">
-                    <el-form-item label="中文名称">
+                    <el-form-item label="中文名称" prop="name">
                         <el-input v-model="searchForm.name" placeholder="请输入中文名称"></el-input>
                     </el-form-item>
                 </el-col>
@@ -33,12 +32,12 @@
                 </el-col>
                 <el-col :md="3" :lg="4" :xl="6">
                     <el-button type="primary" class="ml15" icon="el-icon-search" size="small">搜索</el-button>
-                    <el-button class="blue-btn reset" size="small">重置</el-button>
+                    <el-button class="blue-btn reset" size="small" @click="resetForm('searchForm')">重置</el-button>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :md="7" :lg="6" :xl="6">
-                    <el-form-item label="纯度" prop="name">
+                    <el-form-item label="纯度" prop="purity">
                         <el-select clearable v-model="searchForm.purity" placeholder="请选择纯度">
                             <el-option label="100" value="3"></el-option>
                             <el-option label="222" value="0"></el-option>
@@ -47,48 +46,48 @@
                     </el-form-item>
                 </el-col>
                 <el-col :md="7" :lg="7" :xl="6">
-                    <el-form-item label="规格">
+                    <el-form-item label="规格" prop="specification">
                         <el-select clearable v-model="searchForm.specification" placeholder="请选择规格">
                             <el-option label="100" value="3"></el-option>
                         </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :md="7" :lg="7" :xl="6">
-                    <el-form-item label="供应商">
+                    <el-form-item label="供应商" prop="provider">
                         <el-input v-model="searchForm.provider" placeholder="请输入供应商名称"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :md="7" :lg="6" :xl="6">
-                    <el-form-item label="仓库" prop="name">
+                    <el-form-item label="仓库" prop="warehouse">
                         <el-input v-model="searchForm.warehouse" placeholder="请选择纯度"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :md="7" :lg="7" :xl="6">
-                    <el-form-item label="货位">
+                    <el-form-item label="货位" prop="allocation">
                         <el-input v-model="searchForm.allocation" placeholder="请输入中文名称"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :md="7" :lg="7" :xl="6">
-                    <el-form-item label="ICS号">
+                    <el-form-item label="ICS号" prop="ics">
                         <el-input v-model="searchForm.ics" placeholder="请输入ICS号"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :md="7" :lg="6" :xl="6">
-                    <el-form-item label="采购单号" prop="name">
-                        <el-input v-model="searchForm.number" placeholder="请输入采购单号"></el-input>
+                    <el-form-item label="采购单号" prop="purchaseNote">
+                        <el-input v-model="searchForm.purchaseNote" placeholder="请输入采购单号"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :md="7" :lg="7" :xl="6">
-                    <el-form-item label="批号">
+                    <el-form-item label="批号" prop="batch">
                         <el-input v-model="searchForm.batch" placeholder="请输入批号"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :md="7" :lg="7" :xl="6">
-                    <el-form-item label="入库状态">
+                    <el-form-item label="入库状态" prop="statue">
                         <el-select clearable v-model="searchForm.statue" >
                             <el-option label="待上架" value="0"></el-option>
                             <el-option label="已入库" value="1"></el-option>
@@ -98,7 +97,7 @@
             </el-row>
         </el-form>
         <div>
-            <el-button type="primary" icon="el-icon-plus" size="small">试剂入库</el-button>
+            <el-button type="primary" icon="el-icon-plus" size="small" @click="putInFormVisible = true">试剂入库</el-button>
             <el-button class="blue-btn" icon="el-icon-circle-plus" size="small">批量入库</el-button>
             <el-button class="blue-btn" size="small"><i class="iconfont icon-barcode mr5"></i>条码上架</el-button>
 
@@ -195,6 +194,149 @@
                 layout="total, prev, pager, next, sizes, jumper"
                 :total="pagination.pageTotal">
         </el-pagination>
+
+        <el-dialog title="试剂入库" :visible.sync="putInFormVisible" width="1000px">
+            <el-form :model="putInForm"
+                     ref="putInForm"
+                     :rules="putInFormRules"
+                     label-width="80px"
+                     size="medium"
+                     class="form1"
+                     inline-message>
+                <div class="line-title mb20">基本信息</div>
+                <el-row>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="化合物" prop="compound">
+                            <el-input v-model="putInForm.compound" placeholder="请选择化合物">
+                                <template slot="append">选择</template>
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="净重" prop="netWeight">
+                            <el-input v-model="putInForm.netWeight" placeholder="请填写净重">
+                                <el-select v-model="putInForm.netWeightSelect" slot="append" class="select1">
+                                    <el-option value="g">g</el-option>
+                                    <el-option value="ml">ml</el-option>
+                                </el-select>
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="仓库" prop="warehouse">
+                            <el-select v-model="putInForm.warehouse" placeholder="请选择仓库">
+                                <el-option label="仓库1" value="1"></el-option>
+                                <el-option label="仓库2" value="2"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="瓶重" prop="bottles">
+                            <el-input v-model="putInForm.bottles" placeholder="请填写瓶重，单位g"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="瓶数" prop="bottleCount">
+                            <el-input v-model="putInForm.bottleCount" placeholder="请输入瓶数"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="有效日期" prop="effectiveDate">
+                            <el-date-picker v-model="putInForm.effectiveDate" placeholder="请选择有效日期" type="date"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <div class="line-title mb20">理化性质</div>
+                <el-row>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="来源" prop="source">
+                            <el-select v-model="putInForm.source" placeholder="请选择化合物">
+                                <el-option label="化合物1" value="1"></el-option>
+                                <el-option label="化合物2" value="2"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="理化状态" prop="statue">
+                            <el-input v-model="putInForm.statue" placeholder="请输入理化状态、固态、液化"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="规格" prop="specification">
+                            <el-input v-model="putInForm.specification" placeholder="请输入规格"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="纯度" prop="purity">
+                            <el-select v-model="putInForm.purity" placeholder="请选择纯度">
+                                <el-option label="99%" value="99%"></el-option>
+                                <el-option label="80%" value="80%"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <div class="line-title mb20">采购信息</div>
+                <el-row>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="采购单号" prop="purchaseNote">
+                            <el-input v-model="putInForm.purchaseNote" placeholder="请输入采购单号"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="单价" prop="price">
+                            <el-input placeholder="请输入单价" type="number" v-model="putInForm.price" class="input-with-select">
+                                <template slot="prepend">￥</template>
+                                <template slot="append">.00</template>
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="供应商" prop="provider">
+                            <el-input v-model="putInForm.provider" placeholder="请输入供应商"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="批号" prop="batch">
+                            <el-input v-model="putInForm.batch" placeholder="请输入批号"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+               <el-row>
+                   <el-col :span="10" :offset="1">
+                       <el-form-item label="生产商" prop="producer">
+                           <el-select v-model="putInForm.producer" placeholder="请选择纯度">
+                               <el-option label="99%" value="99%"></el-option>
+                               <el-option label="80%" value="80%"></el-option>
+                           </el-select>
+                       </el-form-item>
+                   </el-col>
+                   <el-col :span="10" :offset="1">
+                       <el-form-item label="生产编号" prop="productionNumber">
+                           <el-input v-model="putInForm.productionNumber" placeholder="请输入规格"></el-input>
+                       </el-form-item>
+                   </el-col>
+               </el-row>
+                <el-row>
+                    <el-col :span="21" :offset="1">
+                        <el-form-item label="说明" prop="explain">
+                            <el-input v-model="putInForm.explain" type="textarea" :rows="4" placeholder="请输入内容"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="cancelPutInDialog('putInForm')">取 消</el-button>
+                <el-button type="primary" @click="submitPutInForm('putInForm') ">确 定</el-button>
+            </div>
+        </el-dialog>
     </template>
 </div>
 <script src="../../libs/jquery.min.js"></script>

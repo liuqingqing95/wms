@@ -333,6 +333,11 @@ a {
   -webkit-transition: none;
   border-color: @borderColor;
 }
+.el-input-group__append, .el-input-group__prepend {
+  color: @black;
+  background-color: #fff;
+  border-radius: 0px;
+}
 .el-select {
   width: 100%;
   .el-input__inner::-webkit-input-placeholder {
@@ -362,19 +367,19 @@ a {
   .el-input__inner:hover,.el-input__inner:focus, .el-textarea__inner:focus, .el-textarea__inner:hover {
     border-color: @borderHoverColor;
   }
-/*  &:hover {
-    .el-input__inner, .el-textarea__inner {
-      border-color: #76b9ff;
-    }
-    .el-input__inner:hover,.el-input__inner:focus, .el-textarea__inner:focus, .el-input__inner:hover {
-      border-color: @borderHoverColor;
-    }
-  }*/
 }
-.el-input.is-active .el-input__inner, .el-input__inner:hover, .el-input__inner:focus, .el-textarea__inner:hover, .el-select:hover .el-input__inner  {
+.el-input.is-active .el-input__inner, .el-input__inner:hover, .el-input__inner:focus, .el-textarea__inner:hover, .el-select:hover .el-input__inner{
   border-color: @borderHoverColor;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+.el-input-group__append, .el-input-group__prepend {
+  padding: 0 12px;
+}
+.el-input-group__append div.el-select .el-input__inner {
+  box-shadow: none;
+  padding-left: 12px;
+  padding-right: 20px;
 }
 .el-input__inner, .el-textarea__inner {
   &::-webkit-input-placeholder {

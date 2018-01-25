@@ -40,6 +40,15 @@ var reagentData = [{
 new Vue({
     el: '#app',
     data: function data() {
+        var priceValidate = function priceValidate(rule, value, callback) {
+            if (value === '') {
+                callback(new Error('请输入单价'));
+            } else if (!/^d*(?:.d{0,2})?$/.test(value)) {
+                callback(new Error('价格为正数，小数点后只能保留两位'));
+            } else {
+                callback();
+            }
+        };
         return {
             reagentData: reagentData,
             pagination: {
@@ -58,10 +67,49 @@ new Vue({
                 warehouse: '',
                 allocation: '',
                 ics: '',
+                purchaseNote: '',
                 batch: '',
                 statue: '0'
             },
-            shrink: false
+            putInForm: {
+                compound: '',
+                netWeight: '',
+                netWeightSelect: 'g',
+                warehouse: '',
+                bottles: '',
+                bottleCount: '',
+                effectiveDate: '',
+
+                source: '',
+                statue: '',
+                specification: '',
+                purity: '',
+
+                purchaseNote: '',
+                price: '',
+                provider: '',
+                batch: '',
+                producer: '',
+                productionNumber: '',
+                explain: ''
+            },
+            putInFormRules: {
+                compound: [{ required: true, message: '请输入化合物', trigger: 'blur' }],
+                netWeight: [{ required: true, message: '请填写净重', trigger: 'change' }],
+                warehouse: [{ required: true, message: '请选择仓库', trigger: 'change' }],
+                bottles: [{ required: true, message: '请填写瓶重', trigger: 'blur' }],
+                source: [{ required: true, message: '请选择来源', trigger: 'change' }],
+                statue: [{ required: true, message: '请输入理化状态、固态、液化', trigger: 'blur' }],
+                specification: [{ required: true, message: '请输入规格', trigger: 'blur' }],
+                purity: [{ required: true, message: '请选择纯度', trigger: 'change' }],
+                purchaseNote: [{ required: true, message: '请输入采购单号', trigger: 'blur' }],
+                price: [{ validator: priceValidate, trigger: 'blur' }],
+                provider: [{ required: true, message: '请输入供应商', trigger: 'blur' }],
+                batch: [{ required: true, message: '请输入批号', trigger: 'blur' }]
+
+            },
+            shrink: false,
+            putInFormVisible: true
         };
     },
 
@@ -71,6 +119,25 @@ new Vue({
         },
         handleCurrentChange: function handleCurrentChange(val) {
             console.log('\u5F53\u524D\u9875: ' + val);
+        },
+        resetForm: function resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
+        submitPutInForm: function submitPutInForm(formName) {
+            var _this = this;
+
+            this.$refs[formName].validate(function (valid) {
+                if (valid) {
+                    console.log(_this[formName]);
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
+        cancelPutInDialog: function cancelPutInDialog(formName) {
+            this.resetForm(formName);
+            this.putInFormVisible = false;
         }
     }
 });
