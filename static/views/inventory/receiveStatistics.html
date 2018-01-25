@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>申领统计</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/inventory/receiveStatistics.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="page-title">申领统计</div>
+        <el-form :inline="true" ref="statisticsForm" :model="statisticsForm" class="form-search mt20" label-width="80px" size="small">
+            <div>
+                <el-form-item label="申领人员" prop="user">
+                    <el-input v-model="statisticsForm.user" placeholder="请输入申领人员"></el-input>
+                </el-form-item>
+                <el-form-item label="实验室" prop="laboratory">
+                    <el-input v-model="statisticsForm.laboratory" placeholder="请输入实验室名"></el-input>
+                </el-form-item>
+                <el-form-item label="仓库" prop="warehouse">
+                    <el-select v-model="statisticsForm.warehouse" placeholder="请选择仓库">
+                        <el-option label="仓库一" value="shanghai"></el-option>
+                        <el-option label="仓库二" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" class="wid100" @click="submitStatistics">查询</el-button>
+                    <el-button class="blue-btn wid100" @click="resetStatistics('statisticsForm')">重置</el-button>
+                </el-form-item>
+            </div>
+            <div>
+                <el-form-item label="项目" prop="project">
+                    <el-input v-model="statisticsForm.project" placeholder="请输入项目名称"></el-input>
+                </el-form-item>
+                <el-form-item label="申领时间">
+                    <el-form-item prop="startTime">
+                        <el-date-picker
+                                v-model="statisticsForm.startTime"
+                                align="right"
+                                type="date"
+                                placeholder="开始时间">
+                        </el-date-picker>
+                    </el-form-item>
+                    <span class="ml5 mr5">至</span>
+                    <el-form-item prop="endTime">
+                        <el-date-picker
+                                v-model="statisticsForm.endTime"
+                                align="right"
+                                type="date"
+                                placeholder="结束时间">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-form-item>
+            </div>
+        </el-form>
+        <div class="analyze-data mt20">
+            <div class="text-center tab">
+                <el-button-group>
+                    <el-button size="small" :class="{'active' : !tabType}" icon="iconfont icon-chart" @click="tabType = 0">图标</el-button>
+                    <el-button size="small" :class="{'active' : tabType}" icon="iconfont icon-table" @click="tabType = 1">表格</el-button>
+                </el-button-group>
+            </div>
+            <el-form ref="form" :model="form" class="mt20" size="small" label-width="50px">
+                <el-form-item label="报表">
+                    <el-radio-group v-model="form.report">
+                        <el-radio label="1">申领统计</el-radio>
+                        <el-radio label="2">配送统计</el-radio>
+                        <el-radio label="3">自取统计</el-radio>
+                        <el-radio label="4">借用统计</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="维度">
+                    <el-radio-group v-model="form.place">
+                        <el-radio label="1">全部</el-radio>
+                        <el-radio label="2">仓库</el-radio>
+                        <el-radio label="3">项目</el-radio>
+                        <el-radio label="4">实验室</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="X 轴">
+                    <el-radio-group v-model="form.xAxis">
+                        <el-radio label="1">年度</el-radio>
+                        <el-radio label="2">季度</el-radio>
+                        <el-radio label="3">月</el-radio>
+                        <el-radio label="4">周</el-radio>
+                        <el-radio label="5">天</el-radio>
+                        <el-radio label="6">仓库</el-radio>
+                        <el-radio label="7">项目</el-radio>
+                        <el-radio label="8">实验室</el-radio>
+                        <el-radio label="9">申领人员</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="Y 轴">
+                    <el-radio-group v-model="form.yAxis">
+                        <el-radio label="1">数量</el-radio>
+                        <el-radio label="2">金额</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="类型">
+                    <el-radio-group v-model="form.type">
+                        <el-radio label="1">折线图</el-radio>
+                        <el-radio label="2">柱状图</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-form>
+            <div class="echarts pt20" id="myChart1" v-show="!tabType"></div>
+        </div>
+        <el-table :data="tableData" stripe class="table" v-show="tabType">
+            <el-table-column label="X轴">
+                <template slot-scope="scope">
+                    <p><a href="">{{ scope.row.xAxis }}</a></p>
+                </template>
+            </el-table-column>
+            <el-table-column label="总数量">
+                <template slot-scope="scope">
+                    <p><el-switch v-model="scope.row.amount"></el-switch></p>
+                </template>
+            </el-table-column>
+        </el-table>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../libs/echarts.min.js"></script>
+<script src="../../js/build/inventory/receiveStatistics.js"></script>
+</body>
+</html>

@@ -59,3 +59,53 @@ var echartOption = {
         data: [150, 232, 201, 154, 190, 330, 410]
     }]
 };
+var tableData = [{
+    xAxis: 33,
+    amount: 42
+}, {
+    xAxis: 21,
+    amount: 56
+}];
+new Vue({
+    el: '#app',
+    data: function data() {
+        return {
+            statisticsForm: {
+                user: '',
+                laboratory: '',
+                warehouse: '',
+                project: '',
+                startTime: '',
+                endTime: ''
+            },
+            tabType: 0,
+            form: {
+                report: '1',
+                place: '1',
+                xAxis: '1',
+                yAxis: '1',
+                type: '1'
+            },
+            tableData: tableData
+        };
+    },
+    created: function created() {
+        this.echartsData();
+    },
+
+    methods: {
+
+        submitStatistics: function submitStatistics() {
+            console.log(this.statisticsForm);
+        },
+        resetStatistics: function resetStatistics(formName) {
+            this.$refs[formName].resetFields();
+        },
+        echartsData: function echartsData() {
+            setTimeout(function () {
+                var myChart = echarts.init(document.getElementById('myChart1'));
+                myChart.setOption(echartOption);
+            }, 20);
+        }
+    }
+});

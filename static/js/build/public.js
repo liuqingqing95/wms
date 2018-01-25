@@ -174,72 +174,43 @@ var menuList = [{
     }]
 }];
 
-var echartOption = {
-    color: ['#FCB200', '#138fff', '#1CBE4E'],
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'line',
-            lineStyle: {
-                color: '#ddd',
-                width: 1,
-                type: 'dashed'
-            }
-        }
-    },
-    legend: {
-        right: 20,
-        data: ['申请数量', '退库数量', '报废数量']
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    toolbox: {},
-    xAxis: {
-        type: 'category',
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-        axisLine: {
-            lineStyle: {
-                color: '#ccc'
-            }
-        }
-    },
-    yAxis: {
-        type: 'value',
-        axisLine: {
-            lineStyle: {
-                color: '#ccc',
-                width: 0
-            }
-        }
-    },
-    series: [{
-        name: '申请数量',
-        type: 'line',
-        stack: '总量',
-        data: [120, 132, 101, 134, 90, 230, 210]
-    }, {
-        name: '退库数量',
-        type: 'line',
-        stack: '总量',
-        data: [220, 182, 191, 234, 290, 330, 310]
-    }, {
-        name: '报废数量',
-        type: 'line',
-        stack: '总量',
-        data: [150, 232, 201, 154, 190, 330, 410]
-    }]
-};
-var tableData = [{
-    xAxis: 33,
-    amount: 42
-}, {
-    xAxis: 21,
-    amount: 56
-}];
+const reagentData = [{
+    number: 'SJ1712200088',
+    name: '一氧化碳',
+    cas: '133-37-9',
+    ics: 'MFCD2837364',
+    netWeight: '100g',
+    currentWeight: '100g',
+    purity: 100,
+    specification: '100g',
+    warehouse: '第一大仓',
+    date: '2017/10/05',
+    statue: '已入库'
+},{
+    number: 'SJ1712200088',
+    name: '一氧化碳',
+    cas: '133-37-9',
+    ics: 'MFCD2837364',
+    netWeight: '100g',
+    currentWeight: '100g',
+    purity: 100,
+    specification: '100g',
+    warehouse: '第一大仓',
+    date: '2017/10/05',
+    statue: '已入库'
+},{
+    number: 'SJ1712200088',
+    name: '一氧化碳',
+    cas: '133-37-9',
+    ics: 'MFCD2837364',
+    netWeight: '100g',
+    currentWeight: '100g',
+    purity: 100,
+    specification: '100g',
+    warehouse: '第一大仓',
+    date: '2017/10/05',
+    statue: '已入库'
+}]
 new Vue({
     el: '#app',
     data: function data() {
@@ -251,28 +222,31 @@ new Vue({
             collapsed: false,
             menuList: [],
 
-            statisticsForm: {
-                user: '',
-                laboratory: '',
+            reagentData: reagentData,
+            pagination: {
+                currentPage: 1,
+                pageSizes: [15,30,60],
+                pageSize: 15,
+                pageTotal: 20
+            },
+            searchForm: {
+                number: '',
+                name: '',
+                cas: '',
+                purity: '',
+                specification: '',
+                provider: '',
                 warehouse: '',
-                project: '',
-                startTime: '',
-                endTime: ''
+                allocation: '',
+                ics: '',
+                batch: '',
+                statue: '0'
             },
-            tabType: 0,
-            form: {
-                report: '1',
-                place: '1',
-                xAxis: '1',
-                yAxis: '1',
-                type: '1'
-            },
-            tableData: tableData
+            shrink: false
         };
     },
     created: function created() {
         this.menuList = menuList;
-        this.echartsData();
     },
 
     methods: {
@@ -286,21 +260,11 @@ new Vue({
             console.log(key, keyPath);
         },
 
-        handleSelect: function handleSelect(a, b) {},
-        showMenu: function showMenu(i, status) {
-            this.$refs.menuCollapsed.getElementsByClassName('iconfont-' + i)[0].style.display = status ? 'block' : 'none';
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
         },
-        submitStatistics: function submitStatistics() {
-            console.log(this.statisticsForm);
-        },
-        resetStatistics: function resetStatistics(formName) {
-            this.$refs[formName].resetFields();
-        },
-        echartsData: function echartsData() {
-            setTimeout(function () {
-                var myChart = echarts.init(document.getElementById('myChart1'));
-                myChart.setOption(echartOption);
-            }, 20);
+        handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
         }
     }
 });
