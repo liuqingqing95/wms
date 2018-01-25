@@ -1,6 +1,8 @@
 src/utils/popper.js
 src/utils/date.js
-*.sh
+examples/play
+build/deploy-faas.sh
 node_modules
 lib
 coverage
+*.md
