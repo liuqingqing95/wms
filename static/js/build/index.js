@@ -59,81 +59,50 @@ var echartOption = {
         data: [150, 232, 201, 154, 190, 330, 410]
     }]
 };
-
-/*var zrColor = zrender.color;
-var colorList = [
-    '#ff7f50','#87cefa','#da70d6','#32cd32','#6495ed',
-    '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0'
-];
-var itemStyle = {
-    normal: {
-        color: function(params) {
-            if (params.dataIndex < 0) {
-                // for legend
-                return zrColor.lift(
-                    colorList[colorList.length - 1], params.seriesIndex * 0.1
-                );
-            }
-            else {
-                // for bar
-                return zrColor.lift(
-                    colorList[params.dataIndex], params.seriesIndex * 0.1
-                );
-            }
-        }
-    }
-};*/
-var option = {
-    toolbox: {
-        show: true,
-        orient: 'vertical',
-        y: 'center'
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis: [{
-        type: 'category',
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-    }],
-    yAxis: [{
-        type: 'value'
-    }],
-    series: [{
-        name: '直接访问',
-        type: 'bar',
-        data: [320, 332, 301, 334, 390, 330, 320]
-    }, {
-        name: '百度',
-        type: 'bar',
-        data: [620, 732, 701, 734, 1090, 1130, 1120]
-    }, {
-        name: '谷歌',
-        type: 'bar',
-        data: [120, 132, 101, 134, 290, 230, 220]
-    }]
-};
 new Vue({
     el: '#app',
     data: function data() {
-        return {};
+        return {
+            screenWidth: document.body.clientWidth
+        };
     },
     created: function created() {
         this.echartsData();
     },
+    mounted: function mounted() {
+        var that = this;
+        window.onresize = function () {
+            return function () {
+                window.screenWidth = document.body.clientWidth;
+                that.screenWidth = window.screenWidth;
+            }();
+        };
+    },
 
+    watch: {
+        screenWidth: function screenWidth(val) {
+            this.echartsResize();
+        },
+
+        //侧边栏收缩拉伸按钮点击监听
+        collapsed: function collapsed(value) {
+            var that = this;
+            //侧边栏收缩拉伸的动画效果定位300ms,此处也定为300ms,动画效果结束后计算宽度
+            setTimeout(function () {
+                that.echartsResize();
+            }, 300);
+        }
+    },
     methods: {
         echartsData: function echartsData() {
             setTimeout(function () {
                 var myChart = echarts.init(document.getElementById('myChart1'));
                 myChart.setOption(echartOption);
-
-                var myChart2 = echarts.init(document.getElementById('myChart2'));
-                myChart2.setOption(option);
             }, 20);
+        },
+        echartsResize: function echartsResize() {
+            var myChart = echarts.init(document.getElementById('myChart1'));
+            myChart.resize();
         }
     }
 });

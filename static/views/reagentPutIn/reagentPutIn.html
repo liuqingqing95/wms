@@ -100,11 +100,11 @@
         <div>
             <el-button type="primary" icon="el-icon-plus" size="small">试剂入库</el-button>
             <el-button class="blue-btn" icon="el-icon-circle-plus" size="small">批量入库</el-button>
-            <el-button class="blue-btn" icon="iconfont icon-barcode mr5" size="small">条码上架</el-button>
+            <el-button class="blue-btn" size="small"><i class="iconfont icon-barcode mr5"></i>条码上架</el-button>
 
             <el-button-group class="ml10">
-                <el-button class="blue-btn" icon="iconfont icon-putaway mr5" size="small">上架</el-button>
-                <el-button class="blue-btn" icon="iconfont icon-print mr5" size="small">打印条码</el-button>
+                <el-button class="blue-btn" size="small"><i class="iconfont icon-putaway mr5"></i>上架</el-button>
+                <el-button class="blue-btn" size="small"><i class="iconfont icon-print mr5"></i>打印条码</el-button>
             </el-button-group>
 
             <div class="part-right">
@@ -114,13 +114,12 @@
                     <el-button type="primary" size="small" icon="el-icon-search"></el-button>
                 </form>
                 <el-button-group>
-                    <el-button class="blue-btn" icon="iconfont icon-export" size="small"></el-button>
-                    <el-button class="blue-btn" icon="iconfont icon-filter-field" size="small"></el-button>
-                    <el-button class="blue-btn" icon="iconfont icon-refresh" size="small"></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-refresh"></i></el-button>
                 </el-button-group>
             </div>
         </div>
-
         <el-table :data="reagentData" stripe border class="table mt20 text-center">
             <el-table-column
                     type="selection"

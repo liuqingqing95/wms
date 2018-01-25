@@ -4,33 +4,33 @@
   .el-col-6 {
     &:nth-child(1) {
       .iconfont {
-        background-color: #1388FF;
+        color: #1388FF;
       }
-      .el-col-6 i {
+      .content p {
         color: #1388FF;
       }
     }
     &:nth-child(2) {
       .iconfont {
-        background-color: #09C2AA;
+        color: #09C2AA;
       }
-      .el-col-6 i  {
+      .content p {
         color: #09C2AA;
       }
     }
     &:nth-child(3) {
       .iconfont {
-        background-color: #1CBE4E;
+        color: #1CBE4E;
       }
-      .el-col-6 i {
+      .content p {
         color: #1CBE4E;
       }
     }
     &:nth-child(4) {
       .iconfont {
-        background-color: #FCB200;
+        color: #FCB200;
       }
-      .el-col-6 i {
+      .content p {
         color: #FCB200;
       }
     }
@@ -41,18 +41,34 @@
   .grid-content {
     padding: 20px 15px;
     border: 1px solid @borderColor;
+    display: table;
+    width: 100%;
     .iconfont {
-      margin-right: 0px;
-      padding: 10px;
-      color: #fff!important;
-      border-radius: 50%;
+      width: 40px;
+      font-size: 40px;
+      vertical-align: middle;
+      padding-right: 20px;
     }
-    i {
-     font-size: 16px;
+    .content, .iconfont {
+      display: table-cell;
+    }
+    p {
+      display: block;
+      font-size: 30px;
     }
     &:last-child {
       margin-right: 0px;
     }
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+}
+@media only screen and (max-width: 1366px) {
+  .part1 .grid-content .iconfont {
+    padding-right: 15px;
   }
 }
 
@@ -70,6 +86,7 @@
     height: 200px;
   }
   .echarts1 {
+    overflow: hidden;
     height: 400px;
   }
 }

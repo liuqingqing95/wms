@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>index</title>
     <link rel="stylesheet" href="../fonts/iconfont.css">
-    <link rel="stylesheet" href="../css/build/public.css">
+    <link rel="stylesheet" href="../libs/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="../css/build/layout.css">
-    <link rel="stylesheet" href="../libs/element-ui/lib/theme-default/index.css">
+    <link rel="stylesheet" href="../css/build/public.css">
 
     <link rel="stylesheet" href="../css/build/index.css">
 </head>
@@ -16,69 +16,57 @@
         <div class="page-title">控制台</div>
         <el-row class="part1 mt20" :gutter="20">
             <el-col :span="6">
-                <p class="mb5">库存警戒</p>
                 <el-row class="grid-content">
-                    <el-col :span="4"><i class="iconfont icon-home"></i></el-col>
-                    <el-col :span="6"><i>12</i> / 商品</el-col>
-                    <el-col :span="6"><i>8</i> / 试剂</el-col>
-                    <el-col :span="6"><i>3</i> / 仪器</el-col>
+                    <i class="iconfont icon-stock"></i>
+                    <div class="content"><p>12</p>库存警戒</div>
                 </el-row>
             </el-col>
             <el-col :span="6">
-                <p class="mb5">待拣货</p>
                 <el-row class="grid-content">
-                    <el-col :span="4"><i class="iconfont icon-home"></i></el-col>
-                    <el-col :span="6"><i>7</i> / 商品</el-col>
-                    <el-col :span="6"><i>2</i> / 试剂</el-col>
-                    <el-col :span="6"><i>3</i> / 仪器</el-col>
+                    <i class="iconfont icon-wait-delivery"></i>
+                    <div class="content"><p>7</p>待拣货</div>
                 </el-row>
             </el-col>
             <el-col :span="6">
-                <p class="mb5">待出库</p>
                 <el-row class="grid-content">
-                    <el-col :span="4"><i class="iconfont icon-home"></i></el-col>
-                    <el-col :span="6"><i>4</i> / 商品</el-col>
-                    <el-col :span="6"><i>6</i> / 试剂</el-col>
-                    <el-col :span="6"><i>3</i> / 仪器</el-col>
+                    <i class="iconfont icon-wait-output"></i>
+                    <div class="content"><p>4</p>待出库</div>
                 </el-row>
             </el-col>
             <el-col :span="6">
-                <p class="mb5">近效期（一周内）</p>
                 <el-row class="grid-content">
-                    <el-col :span="4"><i class="iconfont icon-home"></i></el-col>
-                    <el-col :span="6"><i>9</i> / 商品</el-col>
-                    <el-col :span="6"><i>0</i> / 试剂</el-col>
-                    <el-col :span="6"><i>5</i> / 仪器</el-col>
+                    <i class="iconfont icon-validity"></i>
+                    <div class="content"><p>9</p>近效期（一周内）</div>
                 </el-row>
             </el-col>
         </el-row>
         <div class="portlet mt20">
-            <div class="portlet-title">试剂申请周统计<a href="" class="fr"><i class="iconfont icon-home"></i></a></div>
+            <div class="portlet-title">试剂申请周统计<i class="fr blue el-icon-download"></i></div>
             <div class="portlet-body echarts1" id="myChart1"></div>
         </div>
         <el-row class="part2 mt20">
             <el-col :span="6">
                 <div class="portlet">
                     <div class="portlet-title">申领审批<a href="" class="fr">更多</a></div>
-                    <div class="portlet-body" id="myChart2" class="echarts"></div>
+                    <div class="portlet-body"></div>
                 </div>
             </el-col>
             <el-col :span="6">
                 <div class="portlet">
                     <div class="portlet-title">备货清单<a href="" class="fr">更多</a></div>
-                    <div class="portlet-body" id="myChart3" class="echarts"></div>
+                    <div class="portlet-body"></div>
                 </div>
             </el-col>
             <el-col :span="6">
                 <div class="portlet">
                     <div class="portlet-title">退库请求<a href="" class="fr">更多</a></div>
-                    <div class="portlet-body" id="myChart4" class="echarts"></div>
+                    <div class="portlet-body"></div>
                 </div>
             </el-col>
             <el-col :span="6">
                 <div class="portlet">
                     <div class="portlet-title">报损报废请求<a href="" class="fr">更多</a></div>
-                    <div class="portlet-body" id="myChart5" class="echarts"></div>
+                    <div class="portlet-body"></div>
                 </div>
             </el-col>
         </el-row>
@@ -87,9 +75,9 @@
 <script src="../libs/jquery.min.js"></script>
 <script src="../libs/vue.js"></script>
 <script src="../libs/element-ui/lib/index.js"></script>
+<script src="../js/build/public.js"></script>
 
 <script src="../libs/echarts.min.js"></script>
-<!--<script src="../libs/zrender.min.js"></script>-->
 <script src="../js/build/index.js"></script>
 
 </body>
