@@ -38,15 +38,6 @@ const reagentData = [{
 new Vue({
     el: '#app',
     data() {
-        var priceValidate = (rule, value, callback) => {
-            if (value === '') {
-                callback(new Error('请输入单价'));
-            } else if (!/^d*(?:.d{0,2})?$/.test(value)) {
-                callback(new Error('价格为正数，小数点后只能保留两位'));
-            } else {
-                callback();
-            }
-        };
         return {
             reagentData: reagentData,
             pagination: {
@@ -120,7 +111,8 @@ new Vue({
                     {required: true, message: '请输入采购单号', trigger: 'blur'}
                 ],
                 price: [
-                    {validator: priceValidate, trigger: 'blur'}
+                    {required: true, message: '请输入单价', trigger: 'blur'},
+                    {pattern: /^0\.([1-9]|\d[1-9])$|^[1-9]\d{0,8}\.\d{0,2}$|^[1-9]\d{0,8}$/, message: '单价为正数，整数部分最多为8位，小数部分最多为2位', trigger: 'blur' }
                 ],
                 provider: [
                     {required: true, message: '请输入供应商', trigger: 'blur'}
@@ -131,7 +123,7 @@ new Vue({
 
             },
             shrink: false,
-            putInFormVisible: true
+            putInFormVisible: false
         }
     },
     methods: {
