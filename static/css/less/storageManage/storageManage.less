@@ -1,0 +1,47 @@
+@import "../config.less";
+.table-operate {
+  .icon-remove, .icon-edit1 {
+    font-size: 14px;
+    color: @blue;
+  }
+}
+
+
+.table {
+  .el-table__row {
+    .icon-remove, .icon-edit1 {
+      visibility: hidden;
+    }
+    .icon-edit1 {
+      color: @blue;
+      margin-right: 5px;
+    }
+  }
+  .el-table__row:hover {
+    .icon-remove, .icon-edit1 {
+      visibility: visible;
+    }
+  }
+}
+
+.configure-users {
+  .el-transfer-panel {
+    width: 316px;
+
+  }
+  .transfer-tree {
+    .el-transfer-panel__item {
+      height: auto;
+      line-height: normal;
+      &.el-checkbox .el-checkbox__label {
+        padding-left: 0px;
+      }
+      >.el-checkbox__input {
+        display: none;
+      }
+      .el-checkbox__input {
+        position: static;
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仓库管理</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+    <link rel="stylesheet" href="../../css/build/storageManage/storageManage.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <el-tabs v-model="activeName" @tab-click="tabChange">
+            <el-tab-pane label="仓库管理" name="first">
+                <div class="table-operate mt20">
+                    <el-button type="primary" icon="el-icon-plus" size="small" @click="putInFormVisible = true">新增</el-button>
+                    <el-button class="blue-btn" icon="el-icon-circle-plus" size="small" @click="configureUsersVisible = true">配置用户</el-button>
+
+                    <el-button-group class="ml10">
+                        <el-button class="blue-btn" size="small"><i class="iconfont icon-edit1 mr5"></i>编辑</el-button>
+                        <el-button class="blue-btn" size="small"><i class="iconfont icon-remove mr5"></i>删除</el-button>
+                    </el-button-group>
+
+                    <div class="part-right">
+                        <form class="search-box">
+                            <el-input placeholder="请输入内容" size="small"></el-input>
+                            <el-button type="primary" size="small" icon="el-icon-search"></el-button>
+                        </form>
+                        <el-button-group>
+                            <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
+                            <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
+                            <el-button class="blue-btn" size="small"><i class="iconfont icon-refresh"></i></el-button>
+                        </el-button-group>
+                    </div>
+                </div>
+                <el-table :data="warehouseData" stripe border class="table mt20 text-center">
+                    <el-table-column
+                            type="selection"
+                            width="40">
+                    </el-table-column>
+                    <el-table-column label="仓库名称">
+                        <template slot-scope="scope">
+                            <a href="">{{ scope.row.warehouse }}</a>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="创建用户">
+                        <template slot-scope="scope">
+                            {{ scope.row.creator }}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="创建时间">
+                        <template slot-scope="scope">
+                            {{ scope.row.creationTime }}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="说明">
+                        <template slot-scope="scope">
+                            {{ scope.row.explain }}
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column>
+                        <template slot-scope="scope">
+                            <i class="iconfont icon-edit1"></i>
+                            <i class="iconfont icon-remove"></i>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="pagination.currentPage"
+                        :page-sizes="pagination.pageSizes"
+                        :page-size="pagination.pageSize"
+                        layout="total, prev, pager, next, sizes, jumper"
+                        :total="pagination.pageTotal">
+                </el-pagination>
+
+                <el-dialog title="配置用户仓库使用权" :visible.sync="configureUsersVisible" class="configure-users" width="800px">
+                    <el-transfer
+                            class="transfer-tree"
+                            v-model="selectedList"
+                            filterable
+                            :left-default-checked="[2, 3]"
+                            :right-default-checked="[1]"
+                            :render-content="renderFunc"
+                            :titles="['可选用户', '已选用户']"
+                            :format="{noChecked: '${total}',hasChecked: '${checked}/${total}'}"
+                            @change="transferChange"
+                            :data="userData">
+                    </el-transfer>
+
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="configureUsersVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="submitPutInForm('putInForm') ">确 定</el-button>
+                    </div>
+                </el-dialog>
+            </el-tab-pane>
+            <el-tab-pane label="货位管理" name="second">货位管理</el-tab-pane>
+        </el-tabs>
+
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/storageManage/storageManage.js"></script>
+</body>
+</html>
