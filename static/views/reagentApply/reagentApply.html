@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仓库管理</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+   <link rel="stylesheet" href="../../css/build/reagentApply/reagentApply.css">
+</head>
+<body>
+<div id="app" >
+    <template>
+        <div class="page-title table-operate">申领统计
+            <div class="part-right">
+                <el-button type="text" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont mr5']"></i>高级搜索</el-button>
+                <form class="search-box structure">
+                    <el-input placeholder="请输入内容" size="small"></el-input>
+                    <el-button type="primary" size="small" icon="el-icon-search"></el-button>
+                </form>
+                <el-button-group>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-refresh"></i></el-button>
+                </el-button-group>
+            </div>
+        </div>
+        <el-table :data="reagentData"  stripe border class="table mt20">
+            <el-table-column>
+                <template  slot-scope="scope">
+                    <img class="structure fl" :src="scope.row.img" alt="">
+                    <div class="fl">
+                        <p class="blue mb10">{{ scope.row.CHName }}</p>
+                        <p>{{ scope.row.ENName }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column>
+                <template slot-scope="scope">
+                    <p class="mb10"><span class="label">CAS号：</span>{{ scope.row.CAS }}</p>
+                    <p><span class="label">ICS号：</span>{{ scope.row.ICS }}</p>
+                </template>
+            </el-table-column>
+            <el-table-column>
+                <template slot-scope="scope">
+                    <p><span class="label">分子式：</span>{{ scope.row.molecularFormula }}</p>
+                    <p><span class="label">分子量：</span>{{ scope.row.molecularWeight }}</p>
+                </template>
+            </el-table-column>
+             <el-table-column >
+                <template slot-scope="scope">
+                    <p class="blue">化合物百科</p>
+                </template>
+            </el-table-column>
+            <el-table-column type="expand">
+                <template slot-scope="props">
+                    <el-table :data="props.row.children" stripe class="expand-table">
+                        <el-table-column label="规格">
+                            <template slot-scope="scope">
+                                {{ scope.row.specification }}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="纯度">
+                            <template slot-scope="scope">
+                                {{ scope.row.purity }}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="净含量">
+                            <template slot-scope="scope">
+                                {{ scope.row.netWeight }}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="库存总量">
+                            <template slot-scope="scope">
+                                {{ scope.row.number }}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="供应商">
+                            <template slot-scope="scope">
+                                {{ scope.row.provider }}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <i class="iconfont icon-shopping-cart blue" @click="joinCart(scope.row)"></i>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-pagination
+                :current-page="pagination.currentPage"
+                :page-sizes="pagination.pageSizes"
+                :page-size="pagination.pageSize"
+                layout="total, prev, pager, next, sizes, jumper"
+                :total="pagination.pageTotal">
+        </el-pagination>
+
+        <el-button type="text" size="small" class="shopping-cart" v-if="reagentData.length">
+            <el-badge :value="shoppingCartCount" :max="99" class="item">
+                <a><img src="../../images/shopping-cart.png" alt=""></a>
+            </el-badge>
+        </el-button>
+
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/reagentApply/reagentApply.js"></script>
+</body>
+</html>

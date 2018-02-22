@@ -1,0 +1,103 @@
+@import "../config.less";
+.table {
+  .el-table__row {
+    border: 1px solid #eaecef;
+  }
+  .el-table__expand-icon {
+    height: 30px;
+    >.el-icon {
+      margin-left: -15px;
+      margin-top: -7px;
+    }
+    .el-icon-arrow-right:before {
+      font-family: "iconfont";
+      content: "\e60f";
+      border: 1px solid #ddd;
+      font-size: 16px;
+      color: @blue;
+      padding: 3px;
+    }
+  }
+
+  .el-table__expand-icon--expanded {
+    -webkit-transform: none;
+    transform: none;
+    .el-icon-arrow-right:before {
+      content: "\e975";
+      border: 1px solid #ddd;
+    }
+  }
+  >.el-table__header-wrapper {
+    display: none;
+  }
+  .structure {
+    height: 55px;
+    width: auto;
+    margin-right: 10px;
+  }
+  .label {
+    min-width: 80px;
+    display: inline-block;
+    text-align: right;
+  }
+  .el-table__expanded-cell {
+    padding: 0px;
+    border: none!important;
+    .expand-table th.is-leaf{
+      background: transparent;
+    }
+  }
+  .el-table__row.expanded + tr .expand-table {
+    border-top: 1px solid rgb(186,217,251);
+    border-left: 1px solid rgb(186,217,251);
+    border-right: 2px solid rgb(186,217,251);
+    border-bottom: 1px solid rgb(186,217,251);
+  }
+  .el-table__expanded-cell {
+    &:last-child {
+      border-right: none;
+    }
+    &:first-child {
+      border-left: none;
+    }
+  }
+  .expand-table {
+    border-collapse: collapse;
+    .el-table__body tr:hover>td {
+      border-top-color: #fff;
+      background: #fff;
+      border-bottom-color: #fff;
+    }
+    .el-table__body tr.el-table__row--striped:hover>td {
+      border-top-color: #f7f8fb;
+      background: #f7f8fb;
+      border-bottom-color: #f7f8fb;
+    }
+    th.is-leaf {
+      border-bottom: 1px solid #eaecef;
+    }
+    .el-table__row--striped td {
+      border-top-color: #eaecef!important;
+      border-bottom-color: #eaecef!important;
+    }
+  }
+  tr:last-child .expand-table {
+    border-bottom-width: 2px!important;
+  }
+}
+.shopping-cart {
+  z-index: 99;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 0px;
+  .el-badge__content.is-fixed {
+    border: 0px;
+    right: 22px;
+    top: 8px;
+    height: 18px;
+    line-height: 16px;
+    font-family: "Microsoft YaHei";
+    background: #FF0000;
+  }
+}

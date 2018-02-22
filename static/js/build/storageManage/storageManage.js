@@ -97,38 +97,13 @@ new Vue({
                 pageTotal: 20
             },
             activeName: 'first',
-            configureUsersVisible: true,
+            configureUsersVisible: false,
 
             userData: userData,
             selectedList: [4],
             defaultProps: {
                 children: 'children',
                 label: 'label'
-            },
-            renderFunc: function renderFunc(h, option) {
-                var _this = this;
-
-                console.log(option);
-
-                var a = h('div', {}, [h('el-tree', {
-                    attrs: { 'show-checkbox': true, 'default-expand-all': true },
-                    props: { data: option.tree, 'node-key': id++ + '', 'expand-on-click-node': false, props: this.defaultProps },
-                    'v-on': { 'node-click': function nodeClick() {
-                            _this.handleNodeClick;
-                        } }
-                }, [])]);
-                return a;
-
-                //return h('span', {}, [option.label])
-                /* return h('span', { attrs: { style: 'flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;' } }, [
-                     h('span', {}, [
-                         h('span', {}, [node.label])
-                     ]),
-                     h('span', { attrs: { style: 'font-size: 12px;' } }, [
-                         h('el-button', {attrs: {size: 'mini', style: 'font-size: 12px;', type: 'text'}, on: { click: () => {this.append(data)}}}, ['Append']),
-                         h('el-button', {attrs: {size: 'mini', style: 'font-size: 12px;', type: 'text'}, on: { click: () => {this.remove(node, data)}}}, ['Delete'])
-                     ])
-                 ]);*/
             }
         };
     },
@@ -144,11 +119,11 @@ new Vue({
             this.$refs[formName].resetFields();
         },
         submitPutInForm: function submitPutInForm(formName) {
-            var _this2 = this;
+            var _this = this;
 
             this.$refs[formName].validate(function (valid) {
                 if (valid) {
-                    console.log(_this2[formName]);
+                    console.log(_this[formName]);
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -166,10 +141,33 @@ new Vue({
             console.log(value);
         },
         handleNodeClick: function handleNodeClick(data) {
-            console.log(data);
+            console.log("dd", data);
         },
         handleChange: function handleChange(val) {
             console.log(val);
+        },
+        renderFunc: function renderFunc(h, option) {
+            console.log(option);
+            var that = this;
+            var a = h('div', {}, [h('el-tree', {
+                attrs: { 'show-checkbox': true, 'default-expand-all': true },
+                props: { data: option.tree, 'node-key': id++ + '', 'expand-on-click-node': false, props: this.defaultProps },
+                'on': { 'node-click': function nodeClick() {
+                        that.handleNodeClick;
+                    } }
+            }, [])]);
+            return a;
+
+            //return h('span', {}, [option.label])
+            /* return h('span', { attrs: { style: 'flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding-right: 8px;' } }, [
+                 h('span', {}, [
+                     h('span', {}, [node.label])
+                 ]),
+                 h('span', { attrs: { style: 'font-size: 12px;' } }, [
+                     h('el-button', {attrs: {size: 'mini', style: 'font-size: 12px;', type: 'text'}, on: { click: () => {this.append(data)}}}, ['Append']),
+                     h('el-button', {attrs: {size: 'mini', style: 'font-size: 12px;', type: 'text'}, on: { click: () => {this.remove(node, data)}}}, ['Delete'])
+                 ])
+             ]);*/
         }
     }
 });

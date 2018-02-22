@@ -214,6 +214,40 @@ const menuList =  [
                 "name": "超期归还报表"
             }
         ]
+    },
+    {
+        "path": "/reagentApply",
+        "iconCls": "iconfont icon-reagent-apply",
+        "component": "Home",
+        "name": "试剂申领",
+        "leaf": true,
+        "children": [
+            {
+                "path": "/reagentApply",
+                "component": "reagentApply",
+                "name": "试剂申领"
+            },
+            {
+                "path": "/reagentShare",
+                "component": "reagentShare",
+                "name": "试剂共享"
+            },
+            {
+                "path": "/receive",
+                "component": "receive",
+                "name": "我的申领"
+            },
+            {
+                "path": "/borrow",
+                "component": "borrow",
+                "name": "我的借用"
+            },
+            {
+                "path": "/storageTrack",
+                "component": "storageTrack",
+                "name": "领料车"
+            }
+        ]
     }
 ]
 
