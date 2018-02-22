@@ -1,0 +1,58 @@
+@import "../config.less";
+.el-tabs__header {
+  margin: 0px;
+}
+.icon-reject, .icon-accept {
+  font-size: 14px;
+}
+.dialog1 .el-dialog__body {
+  min-height: inherit;
+}
+.table {
+  .el-table__header {
+    .el-table_1_column_14, .el-table_1_column_2 {
+      text-align: left!important;
+    }
+  }
+  .el-table__row {
+    .structure {
+      max-height: 55px;
+      width: auto;
+    }
+    .icon-batch-borrow2 {
+      font-size: 18px;
+      color: @blue;
+      visibility: hidden;
+    }
+    .icon-accept {
+      color: @green;
+      visibility: hidden;
+    }
+    .icon-reject {
+      color: rgb(245,136,134);
+      visibility: hidden;
+    }
+    &:hover {
+      .icon-batch-borrow2, .icon-accept, .icon-reject {
+        visibility: visible;
+      }
+    }
+  }
+}
+.time-share {
+  .el-form-item__content .el-form-item {
+    width: 220px;
+    float: left;
+    margin-bottom: 0px;
+  }
+}
+.mr0 {
+  margin-right: 0px!important;
+}
+
+.omit {
+  overflow: hidden;
+  max-width: 300px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

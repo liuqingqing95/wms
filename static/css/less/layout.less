@@ -130,7 +130,25 @@
     }
   }
 }
-
+.search-form {
+  height: auto;
+  &.shrink {
+    height: 0px;
+    >div {
+      display: none;
+    }
+  }
+  .el-form-item {
+    display: table;
+    width: 100%;
+    .el-form-item__label {
+      display: table-cell;
+    }
+    .el-form-item__content {
+      display: table-cell;
+    }
+  }
+}
 .breadcrumb {
   display: none;
 }
