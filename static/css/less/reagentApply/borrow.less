@@ -1,12 +1,12 @@
 @import "../config.less";
-.el-tabs__header {
-  margin: 0px;
-}
 .icon-reject, .icon-accept {
   font-size: 14px;
 }
-.dialog1 .el-dialog__body {
-  min-height: inherit;
+.el-button-group {
+  .icon-cancel {
+    font-weight: bold;
+    //text-shadow: 0 0px 0px @blue;
+  }
 }
 .table {
   .el-table__header {
@@ -24,16 +24,12 @@
       color: @blue;
       visibility: hidden;
     }
-    .icon-accept {
+    .icon-cancel {
       color: @green;
       visibility: hidden;
     }
-    .icon-reject {
-      color: rgb(245,136,134);
-      visibility: hidden;
-    }
     &:hover {
-      .icon-batch-borrow2, .icon-accept, .icon-reject {
+      .icon-batch-borrow2, .icon-cancel {
         visibility: visible;
       }
     }
@@ -44,20 +40,5 @@
   margin-right: 0px!important;
 }
 
-.omit {
-  overflow: hidden;
-  max-width: 300px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.search-form .el-form-item.unlimit-width {
-  position: relative;
-  .el-form-item__content .el-form-item:last-child {
-    position: absolute;
-    top: 0px;
-    left: 244px;
-  }
-}
 
 

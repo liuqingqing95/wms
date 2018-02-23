@@ -128,8 +128,8 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :md="7" :lg="7" :xl="6">
-                                <el-form-item label="入库状态" prop="statue">
-                                    <el-select clearable v-model="searchForm.statue" >
+                                <el-form-item label="入库状态" prop="status">
+                                    <el-select clearable v-model="searchForm.status" >
                                         <el-option label="待上架" value="0"></el-option>
                                         <el-option label="已入库" value="1"></el-option>
                                     </el-select>
@@ -217,7 +217,7 @@
                         </el-table-column>
                         <el-table-column label="入库状态">
                             <template slot-scope="scope">
-                                {{ scope.row.statue}}
+                                {{ scope.row.status}}
                             </template>
                         </el-table-column>
                         <el-table-column>
@@ -302,8 +302,8 @@
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="10" :offset="1">
-                                    <el-form-item label="理化状态" prop="statue">
-                                        <el-input v-model="putInForm.statue" placeholder="请输入理化状态、固态、液化"></el-input>
+                                    <el-form-item label="理化状态" prop="status">
+                                        <el-input v-model="putInForm.status" placeholder="请输入理化状态、固态、液化"></el-input>
                                     </el-form-item>
                                 </el-col>
                             </el-row>

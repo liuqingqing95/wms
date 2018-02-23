@@ -11,66 +11,66 @@
     <link rel="stylesheet" href="../../css/build/reagentApply/reagentShare.css">
 </head>
 <body>
-<div id="app" style="width: 1620px;margin: auto">
+<div id="app">
     <template>
         <el-tabs v-model="activeName" @tab-click="tabChange">
+            <el-form :class="[shrink ? '' : 'shrink', 'search-form mt20']" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
+                <el-row>
+                    <el-col :md="7" :lg="6" :xl="6">
+                        <el-form-item label="CAS号" prop="cas">
+                            <el-input v-model="searchForm.cas" placeholder="请输入CAS号"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :md="7" :lg="6" :xl="6">
+                        <el-form-item label="名称" prop="name">
+                            <el-input v-model="searchForm.name" placeholder="请输入名称"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :md="7" :lg="6" :xl="6">
+                        <el-form-item label="状态" prop="status">
+                            <el-select clearable v-model="searchForm.status" placeholder="请选择状态">
+                                <el-option label="全部" value="3"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :md="3" :lg="4" :xl="6">
+                        <el-button type="primary" class="ml15" icon="el-icon-search" size="small">搜索</el-button>
+                        <el-button class="blue-btn reset" size="small" @click="resetForm('searchForm')">重置</el-button>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :md="7" :lg="6" :xl="6">
+                        <el-form-item label="共享时间" class="time-range unlimit-width">
+                            <el-form-item prop="startTime" class="mr0">
+                                <el-date-picker
+                                        v-model="searchForm.startTime"
+                                        align="right"
+                                        type="date"
+                                        placeholder="开始时间">
+                                </el-date-picker>
+                            </el-form-item>
+                            <span class="ml5 fl">至</span>
+                            <el-form-item prop="endTime">
+                                <el-date-picker
+                                        v-model="searchForm.endTime"
+                                        align="right"
+                                        type="date"
+                                        placeholder="结束时间">
+                                </el-date-picker>
+                            </el-form-item>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
             <el-tab-pane label="所有共享" name="first">
-                <el-form :class="[shrink ? '' : 'shrink', 'search-form mt20']" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
-                    <el-row>
-                        <el-col :md="7" :lg="7" :xl="6">
-                            <el-form-item label="CAS号" prop="cas">
-                                <el-input v-model="searchForm.cas" placeholder="请输入CAS号"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :md="7" :lg="7" :xl="6">
-                            <el-form-item label="名称" prop="name">
-                                <el-input v-model="searchForm.name" placeholder="请输入名称"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :md="7" :lg="7" :xl="6">
-                            <el-form-item label="状态" prop="statue">
-                                <el-select clearable v-model="searchForm.statue" placeholder="请选择状态">
-                                    <el-option label="全部" value="3"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :md="3" :lg="4" :xl="6">
-                            <el-button type="primary" class="ml15" icon="el-icon-search" size="small">搜索</el-button>
-                            <el-button class="blue-btn reset" size="small" @click="resetForm('searchForm')">重置</el-button>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :md="14" :lg="12" :xl="12">
-                            <el-form-item label="共享时间" class="time-share">
-                                <el-form-item prop="startTime" class="mr0">
-                                    <el-date-picker
-                                            v-model="searchForm.startTime"
-                                            align="right"
-                                            type="date"
-                                            placeholder="开始时间">
-                                    </el-date-picker>
-                                </el-form-item>
-                                <span class="ml5 mr5 fl">至</span>
-                                <el-form-item prop="endTime">
-                                    <el-date-picker
-                                            v-model="searchForm.endTime"
-                                            align="right"
-                                            type="date"
-                                            placeholder="结束时间">
-                                    </el-date-picker>
-                                </el-form-item>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </el-form>
                 <div class="table-operate">
-                    <el-button class="blue-btn" size="small" @click=""><i class="iconfont icon-batch-borrow fs14 mr5"></i>试剂入库</el-button>
+                    <el-button class="blue-btn" size="small" @click=""><i class="iconfont icon-batch-borrow fs14 mr5"></i>批量借用</el-button>
                     <div class="part-right">
-                        <el-button type="text" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont mr5']"></i>高级搜索</el-button>
                         <form class="search-box structure ">
                             <el-input placeholder="请输入试剂信息" size="small"></el-input>
                             <el-button type="primary" size="small" icon="el-icon-search"></el-button>
                         </form>
+                        <el-button class="blue-btn mr10" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont fs14 mr5']"></i>高级搜索</el-button>
                         <el-button-group>
                             <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
                             <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
@@ -84,7 +84,7 @@
                             width="40">
                     </el-table-column>
                     <el-table-column label="试剂条码" fixed min-width="80">
-                        <template class="text-left" slot-scope="scope">
+                        <template slot-scope="scope">
                             <p class="text-left"><a href="">{{ scope.row.number }}</a></p>
                         </template>
                     </el-table-column>
@@ -149,65 +149,17 @@
                 </el-pagination>
             </el-tab-pane>
             <el-tab-pane label="我的共享" name="second">
-                <el-form :class="[shrink ? '' : 'shrink', 'search-form mt20']" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
-                    <el-row>
-                        <el-col :md="7" :lg="7" :xl="6">
-                            <el-form-item label="CAS号" prop="cas">
-                                <el-input v-model="searchForm.cas" placeholder="请输入CAS号"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :md="7" :lg="7" :xl="6">
-                            <el-form-item label="名称" prop="name">
-                                <el-input v-model="searchForm.name" placeholder="请输入名称"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :md="7" :lg="7" :xl="6">
-                            <el-form-item label="状态" prop="statue">
-                                <el-select clearable v-model="searchForm.statue" placeholder="请选择状态">
-                                    <el-option label="全部" value="3"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :md="3" :lg="4" :xl="6">
-                            <el-button type="primary" class="ml15" icon="el-icon-search" size="small">搜索</el-button>
-                            <el-button class="blue-btn reset" size="small" @click="resetForm('searchForm')">重置</el-button>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :md="14" :lg="12" :xl="12">
-                            <el-form-item label="共享时间" class="time-share">
-                                <el-form-item prop="startTime" class="mr0">
-                                    <el-date-picker
-                                            v-model="searchForm.startTime"
-                                            align="right"
-                                            type="date"
-                                            placeholder="开始时间">
-                                    </el-date-picker>
-                                </el-form-item>
-                                <span class="ml5 mr5 fl">至</span>
-                                <el-form-item prop="endTime">
-                                    <el-date-picker
-                                            v-model="searchForm.endTime"
-                                            align="right"
-                                            type="date"
-                                            placeholder="结束时间">
-                                    </el-date-picker>
-                                </el-form-item>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </el-form>
                 <div class="table-operate">
-                    <el-button-group class="ml10">
+                    <el-button-group>
                         <el-button class="blue-btn" size="small"><i class="iconfont icon-accept mr5"></i>同意</el-button>
                         <el-button class="blue-btn" size="small"><i class="iconfont icon-reject mr5"></i>拒绝</el-button>
                     </el-button-group>
                     <div class="part-right">
-                        <el-button type="text" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont mr5']"></i>高级搜索</el-button>
                         <form class="search-box structure ">
                             <el-input placeholder="请输入试剂信息" size="small"></el-input>
                             <el-button type="primary" size="small" icon="el-icon-search"></el-button>
                         </form>
+                        <el-button class="blue-btn mr10" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont fs14 mr5']"></i>高级搜索</el-button>
                         <el-button-group>
                             <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
                             <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
@@ -221,7 +173,7 @@
                             width="40">
                     </el-table-column>
                     <el-table-column label="试剂条码" fixed min-width="80">
-                        <template class="text-left" slot-scope="scope">
+                        <template slot-scope="scope">
                             <p class="text-left"><a href="">{{ scope.row.number }}</a></p>
                         </template>
                     </el-table-column>
@@ -273,7 +225,7 @@
                     </el-table-column>
                     <el-table-column label="状态">
                         <template slot-scope="scope">
-                            {{ scope.row.statue}}
+                            {{ scope.row.status}}
                         </template>
                     </el-table-column>
                     <el-table-column>
@@ -292,79 +244,13 @@
                 </el-pagination>
             </el-tab-pane>
             <el-tab-pane label="借用审核" name="third">
-                <el-form :class="[shrink ? '' : 'shrink', 'search-form mt20']" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
-                    <el-row>
-                        <el-col :md="7" :lg="7" :xl="6">
-                            <el-form-item label="CAS号" prop="cas">
-                                <el-input v-model="searchForm.cas" placeholder="请输入CAS号"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :md="7" :lg="7" :xl="6">
-                            <el-form-item label="名称" prop="name">
-                                <el-input v-model="searchForm.name" placeholder="请输入名称"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :md="7" :lg="7" :xl="6">
-                            <el-form-item label="状态" prop="statue">
-                                <el-select clearable v-model="searchForm.statue" placeholder="请选择状态">
-                                    <el-option label="全部" value="3"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :md="3" :lg="4" :xl="6">
-                            <el-button type="primary" class="ml15" icon="el-icon-search" size="small">搜索</el-button>
-                            <el-button class="blue-btn reset" size="small" @click="resetForm('searchForm')">重置</el-button>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :md="14" :lg="12" :xl="12">
-                            <el-form-item label="共享时间" class="time-share">
-                                <el-form-item prop="startTime" class="mr0">
-                                    <el-date-picker
-                                            v-model="searchForm.startTime"
-                                            align="right"
-                                            type="date"
-                                            placeholder="开始时间">
-                                    </el-date-picker>
-                                </el-form-item>
-                                <span class="ml5 mr5 fl">至</span>
-                                <el-form-item prop="endTime">
-                                    <el-date-picker
-                                            v-model="searchForm.endTime"
-                                            align="right"
-                                            type="date"
-                                            placeholder="结束时间">
-                                    </el-date-picker>
-                                </el-form-item>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </el-form>
-                <div class="table-operate">
-                    <el-button-group class="ml10">
-                        <el-button class="blue-btn" size="small"><i class="iconfont icon-accept mr5"></i>同意</el-button>
-                        <el-button class="blue-btn" size="small"><i class="iconfont icon-reject mr5"></i>拒绝</el-button>
-                    </el-button-group>
-                    <div class="part-right">
-                        <el-button type="text" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont mr5']"></i>高级搜索</el-button>
-                        <form class="search-box structure ">
-                            <el-input placeholder="请输入试剂信息" size="small"></el-input>
-                            <el-button type="primary" size="small" icon="el-icon-search"></el-button>
-                        </form>
-                        <el-button-group>
-                            <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
-                            <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
-                            <el-button class="blue-btn" size="small"><i class="iconfont icon-refresh"></i></el-button>
-                        </el-button-group>
-                    </div>
-                </div>
                 <el-table :data="auditData" stripe border class="table mt20 text-center">
                     <el-table-column
                             type="selection"
                             width="40">
                     </el-table-column>
                     <el-table-column label="试剂条码"  min-width="80">
-                        <template class="text-left" slot-scope="scope">
+                        <template slot-scope="scope">
                             <p class="text-left"><a href="">{{ scope.row.number }}</a></p>
                         </template>
                     </el-table-column>

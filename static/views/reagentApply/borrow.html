@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的借用</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/reagentApply/borrow.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="page-title">我的借用</div>
+        <el-form class="form-search mt20" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
+            <div>
+                <el-form-item label="CAS号" prop="cas">
+                    <el-input v-model="searchForm.cas" placeholder="请输入CAS号"></el-input>
+                </el-form-item>
+                <el-form-item label="试剂条码" prop="name">
+                    <el-input v-model="searchForm.number" placeholder="请输入试剂条码"></el-input>
+                </el-form-item>
+                <el-form-item label="名称" prop="name">
+                    <el-input v-model="searchForm.name" placeholder="请输入名称"></el-input>
+                </el-form-item>
+                <el-button type="primary" class="ml15" icon="el-icon-search" size="small">搜索</el-button>
+                <el-button class="blue-btn reset" size="small" @click="resetForm('searchForm')">重置</el-button>
+
+            </div>
+            <div>
+                <el-form-item label="状态" prop="status">
+                    <el-select clearable v-model="searchForm.status" placeholder="请选择状态">
+                        <el-option label="全部" value="3"></el-option>
+                    </el-select>
+                </el-form-item>
+            </div>
+        </el-form>
+        <el-button-group class="mt20">
+            <el-button class="blue-btn" size="small" @click=""><i class="iconfont icon-cancel fs14 mr5"></i>取消借用</el-button>
+            <el-button class="blue-btn" size="small" @click=""><i class="iconfont icon-batch-borrow fs14 mr5"></i>归还</el-button>
+        </el-button-group>
+
+        <el-table :data="allShareData" stripe border class="table mt20 text-center">
+            <el-table-column
+                    type="selection"
+                    width="40">
+            </el-table-column>
+            <el-table-column label="试剂条码" fixed min-width="80">
+                <template slot-scope="scope">
+                    <p class="text-left"><a href="">{{ scope.row.number }}</a></p>
+                </template>
+            </el-table-column>
+            <el-table-column label="结构式" fixed min-width="130">
+                <template slot-scope="scope">
+                    <img class="structure" :src="scope.row.structure" alt="">
+                </template>
+            </el-table-column>
+            <el-table-column label="化合物名称" fixed>
+                <template slot-scope="scope">
+                    {{ scope.row.name }}
+                </template>
+            </el-table-column>
+            <el-table-column label="CAS号" min-width="130">
+                <template slot-scope="scope">
+                    {{ scope.row.cas }}
+                </template>
+            </el-table-column>
+            <el-table-column label="规格">
+                <template slot-scope="scope">
+                    {{ scope.row.specification}}
+                </template>
+            </el-table-column>
+            <el-table-column label="纯度">
+                <template slot-scope="scope">
+                    {{ scope.row.purity}}
+                </template>
+            </el-table-column>
+            <el-table-column label="当前量">
+                <template slot-scope="scope">
+                    {{ scope.row.currentWeight}}
+                </template>
+            </el-table-column>
+
+            <el-table-column label="有效期" min-width="100">
+                <template slot-scope="scope">
+                    {{ scope.row.validityPeriod}}
+                </template>
+            </el-table-column>
+            <el-table-column label="共享人">
+                <template slot-scope="scope">
+                    {{ scope.row.sharer}}
+                </template>
+            </el-table-column>
+            <el-table-column label="共享时间">
+                <template slot-scope="scope">
+                    {{ scope.row.timeShare}}
+                </template>
+            </el-table-column>
+            <el-table-column>
+                <template slot-scope="scope">
+                    <i class="iconfont icon-cancel mr5"></i>
+                    <i class="iconfont icon-batch-borrow2" @click=""></i>
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-pagination
+                :current-page="pagination.currentPage"
+                :page-sizes="pagination.pageSizes"
+                :page-size="pagination.pageSize"
+                layout="total, prev, pager, next, sizes, jumper"
+                :total="pagination.pageTotal">
+        </el-pagination>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/reagentApply/borrow.js"></script>
+</body>
+</html>

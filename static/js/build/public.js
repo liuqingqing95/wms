@@ -212,7 +212,7 @@ var reagentData = [{
     specification: '100g',
     warehouse: '第一大仓',
     date: '2017/10/05',
-    statue: '已入库'
+    status: '已入库'
 }, {
     number: 'SJ1712200088',
     name: '一氧化碳',
@@ -224,7 +224,7 @@ var reagentData = [{
     specification: '100g',
     warehouse: '第一大仓',
     date: '2017/10/05',
-    statue: '已入库'
+    status: '已入库'
 }, {
     number: 'SJ1712200088',
     name: '一氧化碳',
@@ -236,7 +236,7 @@ var reagentData = [{
     specification: '100g',
     warehouse: '第一大仓',
     date: '2017/10/05',
-    statue: '已入库'
+    status: '已入库'
 }];
 
 new Vue({
@@ -269,7 +269,7 @@ new Vue({
                 ics: '',
                 purchaseNote: '',
                 batch: '',
-                statue: '0'
+                status: '0'
             },
             putInForm: {
                 compound: '',
@@ -281,7 +281,7 @@ new Vue({
                 effectiveDate: '',
 
                 source: '',
-                statue: '',
+                status: '',
                 specification: '',
                 purity: '',
 
@@ -299,7 +299,7 @@ new Vue({
                 warehouse: [{ required: true, message: '请选择仓库', trigger: 'change' }],
                 bottles: [{ required: true, message: '请填写瓶重', trigger: 'blur' }],
                 source: [{ required: true, message: '请选择来源', trigger: 'change' }],
-                statue: [{ required: true, message: '请输入理化状态、固态、液化', trigger: 'blur' }],
+                status: [{ required: true, message: '请输入理化状态、固态、液化', trigger: 'blur' }],
                 specification: [{ required: true, message: '请输入规格', trigger: 'blur' }],
                 purity: [{ required: true, message: '请选择纯度', trigger: 'change' }],
                 purchaseNote: [{ required: true, message: '请输入采购单号', trigger: 'blur' }],

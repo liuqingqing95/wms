@@ -262,7 +262,7 @@ const reagentData = [{
     specification: '100g',
     warehouse: '第一大仓',
     date: '2017/10/05',
-    statue: '已入库'
+    status: '已入库'
 },{
     number: 'SJ1712200088',
     name: '一氧化碳',
@@ -274,7 +274,7 @@ const reagentData = [{
     specification: '100g',
     warehouse: '第一大仓',
     date: '2017/10/05',
-    statue: '已入库'
+    status: '已入库'
 },{
     number: 'SJ1712200088',
     name: '一氧化碳',
@@ -286,7 +286,7 @@ const reagentData = [{
     specification: '100g',
     warehouse: '第一大仓',
     date: '2017/10/05',
-    statue: '已入库'
+    status: '已入库'
 }]
 
 new Vue({
@@ -319,7 +319,7 @@ new Vue({
                 ics: '',
                 purchaseNote: '',
                 batch: '',
-                statue: '0'
+                status: '0'
             },
             putInForm: {
                 compound: '',
@@ -331,7 +331,7 @@ new Vue({
                 effectiveDate: '',
 
                 source: '',
-                statue: '',
+                status: '',
                 specification: '',
                 purity: '',
 
@@ -359,7 +359,7 @@ new Vue({
                 source: [
                     {required: true, message: '请选择来源', trigger: 'change'}
                 ],
-                statue: [
+                status: [
                     {required: true, message: '请输入理化状态、固态、液化', trigger: 'blur'}
                 ],
                 specification: [

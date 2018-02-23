@@ -32,7 +32,7 @@ let myShareData = [{
     validityPeriod: '2017/10/21',
     sharer: '蔡芳',
     timeShare: '2017/10/21',
-    statue: '已共享'
+    status: '已共享'
 },{
     number: 'SJ171220088',
     structure: '../../images/structure.png',
@@ -44,7 +44,7 @@ let myShareData = [{
     validityPeriod: '2017/10/21',
     sharer: '蔡芳',
     timeShare: '2017/10/21',
-    statue: '待确认'
+    status: '待确认'
 }]
 let auditData = [{
     number: 'SJ171220088',
@@ -83,7 +83,7 @@ new Vue({
             searchForm: {
                 cas: '',
                 name: '',
-                statue: '',
+                status: '',
                 startTime: '',
                 endTime: ''
             },

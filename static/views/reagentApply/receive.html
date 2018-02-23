@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的申领</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/reagentApply/receive.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <el-tabs v-model="activeName" @tab-click="tabChange" type="card">
+            <el-form  class="form-search mt20" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
+                <div>
+                    <el-form-item label="申请单号" prop="cas" class="structure">
+                        <el-input v-model="searchForm.number" placeholder="请输入CAS号"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="截止时间" class="time-range unlimit-width">
+                        <el-form-item prop="startTime" class="mr0">
+                            <el-date-picker
+                                    v-model="searchForm.startTime"
+                                    align="right"
+                                    type="date"
+                                    placeholder="请选择下单开始时间">
+                            </el-date-picker>
+                        </el-form-item>
+                        <span class="ml5 fl mr5">至</span>
+                        <el-form-item prop="endTime">
+                            <el-date-picker
+                                    v-model="searchForm.endTime"
+                                    align="right"
+                                    type="date"
+                                    placeholder="请选择下单结束时间">
+                            </el-date-picker>
+                        </el-form-item>
+                    </el-form-item>
+
+                    <el-button type="primary" class="ml15" icon="el-icon-search" size="small">搜索</el-button>
+                    <el-button class="blue-btn reset" size="small" @click="resetForm('searchForm')">重置</el-button>
+                </div>
+
+            </el-form>
+            <el-tab-pane label="全部" name="0">
+                <el-table :data="allData" stripe border class="table mt20 text-center">
+                    <el-table-column
+                            type="selection"
+                            width="40">
+                    </el-table-column>
+                    <el-table-column label="申领单号" fixed min-width="100">
+                        <template slot-scope="scope">
+                            <p class="text-left"><a href="">{{ scope.row.number }}</a></p>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="中文名称" fixed>
+                        <template slot-scope="scope">
+                            {{ scope.row.CHName }}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="CAS号" min-width="100">
+                        <template slot-scope="scope">
+                            {{ scope.row.cas }}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="纯度">
+                        <template slot-scope="scope">
+                            {{ scope.row.purity}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="申领量">
+                        <template slot-scope="scope">
+                            {{ scope.row.receive}}
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column label="所属项目">
+                        <template slot-scope="scope">
+                            {{ scope.row.project}}
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column label="申领时间" min-width="100">
+                        <template slot-scope="scope">
+                            {{ scope.row.time}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="申领状态">
+                        <template slot-scope="scope">
+                            {{ scope.row.status}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="试剂存放位置">
+                        <template slot-scope="scope">
+                            {{ scope.row.position}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="是否共享">
+                        <template slot-scope="scope">
+                            <span v-if="typeof scope.row.share === 'string' ">{{ scope.row.share}}</span>
+                            <el-switch v-else
+                                    v-model="scope.row.share"
+                                    active-color="#138fff"
+                                    inactive-color="#eee">
+                            </el-switch>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="审核详情">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.detail === '-' ">{{ scope.row.detail}}</span>
+                            <span v-else class="blue" @click="approveFormVisible = true">{{ scope.row.detail}}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" min-width="120">
+                        <template slot-scope="scope">
+                            <span v-for="item in scope.row.operate">
+                                <span v-if="item.type === '1'" class="blue mr5" @click="requestFormVisible = true">{{item.name}}</span>
+                                <span v-if="item.type === '2'" class="green mr5" @click="storeFormVisible = true">{{item.name}}</span>
+                                <span v-if="item.type === '3'" class="green mr5" @click="scrapFormVisible = true">{{item.name}}</span>
+                            </span>
+
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination
+                        :current-page="pagination.currentPage"
+                        :page-sizes="pagination.pageSizes"
+                        :page-size="pagination.pageSize"
+                        layout="total, prev, pager, next, sizes, jumper"
+                        :total="pagination.pageTotal">
+                </el-pagination>
+            </el-tab-pane>
+            <el-tab-pane label="待审批" name="1"></el-tab-pane>
+            <el-tab-pane label="待签收" name="2"></el-tab-pane>
+            <el-tab-pane label="已拒绝" name="3"></el-tab-pane>
+            <el-tab-pane label="已签收" name="4"></el-tab-pane>
+            <el-tab-pane label="已退库" name="5"></el-tab-pane>
+            <el-tab-pane label="已报废" name="6"></el-tab-pane>
+        </el-tabs>
+        <el-dialog title="归还申请" :visible.sync="requestFormVisible" width="420px">
+            <el-form :model="requestForm"
+                     :rules="requestRules"
+                     ref="requestForm"
+                     size="medium"
+                     inline-message>
+                <el-form-item prop="request" class="mb0">
+                    <el-input type="textarea" v-model="requestForm.request" :maxlength="200" placeholder="请填写归还原因" :rows="6"></el-input>
+                    <div class="text-right">{{requestForm.request.length}}/200</div>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="requestFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitRequestForm('requestForm') ">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="存放" :visible.sync="storeFormVisible" width="420px">
+            <el-form :model="storeForm"
+                     :rules="storeRules"
+                     ref="storeForm"
+                     size="medium"
+                     inline-message>
+                <el-form-item prop="request" class="mb0">
+                    <el-input type="textarea" v-model="storeForm.request" :maxlength="200" placeholder="请填写存放位置" :rows="6"></el-input>
+                    <div class="text-right">{{storeForm.request.length}}/200</div>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="storeFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitRequestForm('storeForm') ">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="报废申请" :visible.sync="scrapFormVisible" width="420px">
+            <el-form :model="scrapForm"
+                     :rules="scrapRules"
+                     ref="scrapForm"
+                     size="medium"
+                     inline-message>
+                <el-form-item prop="request" class="mb0">
+                    <el-input type="textarea" v-model="scrapForm.request" :maxlength="200" placeholder="请填写报废原因" :rows="6"></el-input>
+                    <div class="text-right">{{scrapForm.request.length}}/200</div>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="scrapFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitRequestForm('scrapForm') ">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="审批详情" :visible.sync="approveFormVisible" width="1000px">
+            <div class="line-title mb20">审批列表</div>
+            <el-table :data="approveData" stripe border class="table mt20 text-center">
+                <el-table-column label="审批人">
+                    <template slot-scope="scope">
+                        {{ scope.row.name}}
+                    </template>
+                </el-table-column>
+                <el-table-column label="审批时间">
+                    <template slot-scope="scope">
+                        {{ scope.row.time}}
+                    </template>
+                </el-table-column>
+                <el-table-column label="审批状态">
+                    <template slot-scope="scope">
+                        {{ scope.row.status}}
+                    </template>
+                </el-table-column>
+                <el-table-column label="审批意见">
+                    <template slot-scope="scope">
+                        {{ scope.row.opinion}}
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="line-title mt20">审批状态</div>
+            <div class="mt10 ml20">
+                <!-- process-status: wait / process / finish / error / success -->
+                <el-steps direction="vertical" :active="0" process-status="error">
+                    <el-step :title="item.time" :description="item.opinion"  v-for="item in process">dd</el-step>
+                </el-steps>
+            </div>
+        </el-dialog>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/reagentApply/receive.js"></script>
+</body>
+</html>

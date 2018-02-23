@@ -146,7 +146,7 @@ i {
 
 /*margin  mt5 mt40   mb5~m40*/
 .margin-function(8);
-.margin-function(@n, @i: 1, @class: @i *5) when (@i <= @n) {
+.margin-function(@n, @i: 0, @class: @i *5) when (@i <= @n) {
   .mt@{class} {
     margin-top: @i * 5px!important;
   }
