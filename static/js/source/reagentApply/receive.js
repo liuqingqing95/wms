@@ -133,22 +133,6 @@ new Vue({
                     console.log('fail')
                 }
             });
-        },
-        operate(item) {
-            /*switch (item.type) {
-                case '1':
-                    break;
-                case '2':
-                    break;
-                case '3':
-                    break;
-            }*/
-            for(let i = 0; i < dialog.length; i++) {
-                if(dialog[i].type === item.type) {
-
-                    break;
-                }
-            }
         }
     }
 

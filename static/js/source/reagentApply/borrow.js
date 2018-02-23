@@ -41,9 +41,37 @@ new Vue({
                 number: '',
                 name: '',
                 status: ''
+            },
+            cancelBorrowVisible: false,
+            cancelBorrowForm: {
+                request: ''
+            },
+            cancelBorrowRules: {
+                request: [{ required: true, message: '请填写取消借用原因', trigger: 'submit' }]
+            },
+            returnVisible: false,
+            returnForm: {
+                number: null,
+                remark: ''
+            },
+            returnRules: {
+                number: [
+                    {pattern: /^\+?[1-9][0-9]*$/, message: '请输入正整数',  trigger: 'blur'}
+                    /*{required: true, message: '请输入数量', trigger: 'blur'}*/
+                ]
             }
+
         }
     },
     methods: {
+        submitRequestForm(form) {
+            this.$refs[form].validate(function(valid) {
+                if (valid) {
+                    console.log('success')
+                } else {
+                    console.log('fail')
+                }
+            });
+        }
     }
 })
