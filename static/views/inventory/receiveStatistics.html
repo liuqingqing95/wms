@@ -59,10 +59,16 @@
             </div>
         </el-form>
         <div class="analyze-data mt20">
-            <div class="text-center tab">
-                <el-button-group>
-                    <el-button size="small" :class="{'active' : !tabType}" icon="iconfont icon-chart" @click="tabType = 0">图标</el-button>
-                    <el-button size="small" :class="{'active' : tabType}" icon="iconfont icon-table" @click="tabType = 1">表格</el-button>
+            <div class="tabs">
+                <div class="text-center tab">
+                    <el-button-group class="">
+                        <el-button size="small" :class="{'active' : !tabType}" icon="iconfont icon-chart" @click="tabType = 0">图表</el-button>
+                        <el-button size="small" :class="{'active' : tabType}" icon="iconfont icon-table" @click="tabType = 1">表格</el-button>
+                    </el-button-group>
+                </div>
+                <el-button-group class="part-right">
+                    <el-button size="small" class="blue-btn"><i class="iconfont icon-download fs14"></i></el-button>
+                    <el-button size="small" class="blue-btn"><i class="iconfont icon-refresh fs14"></i></el-button>
                 </el-button-group>
             </div>
             <el-form ref="form" :model="form" class="mt20" size="small" label-width="50px">

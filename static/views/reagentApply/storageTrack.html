@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>领料车</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/reagentApply/storageTrack.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="page-title">领料车<span class="count">({{storageData.length}}</span></div>
+        <el-table :data="storageData" stripe border class="table mt20 text-center">
+            <el-table-column
+                    type="selection"
+                    width="40">
+            </el-table-column>
+            <el-table-column label="名称" fixed>
+                <template slot-scope="scope">
+                    <el-tooltip effect="light" :content="scope.row.remark" placement="bottom">
+                        <span class="blue">{{ scope.row.name }}</span>
+                    </el-tooltip>
+
+                </template>
+            </el-table-column>
+            <el-table-column label="CAS号" min-width="130">
+                <template slot-scope="scope">
+                    {{ scope.row.cas }}
+                </template>
+            </el-table-column>
+            <el-table-column label="纯度">
+                <template slot-scope="scope">
+                    {{ scope.row.purity}}
+                </template>
+            </el-table-column>
+            <el-table-column label="规格">
+                <template slot-scope="scope">
+                    {{ scope.row.specification}}
+                </template>
+            </el-table-column>
+
+            <el-table-column label="库存总量（瓶）">
+                <template slot-scope="scope">
+                    {{ scope.row.totalInventory}}
+                </template>
+            </el-table-column>
+            <el-table-column label="申请量（瓶）">
+                <template slot-scope="scope">
+                    <el-input-number size="small" v-model="scope.row.predictReceive"></el-input-number>
+                </template>
+            </el-table-column>
+            <el-table-column label="预计用量">
+                <template slot-scope="scope">
+                    <el-input class="wid60" size="small" v-model="scope.row.dosage"></el-input><span class="ml10">g</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="所属项目" min-width="100">
+                <template slot-scope="scope">
+                    <el-select v-model="scope.row.selectedProject" class="project" size="small" clearable placeholder="请选择">
+                        <el-option
+                                v-for="item in scope.row.project"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-table-column>
+            <el-table-column label="配送状态" >
+                <template slot-scope="scope">
+                    <el-switch
+                            v-model="scope.row.status"
+                            active-color="#138fff"
+                            inactive-color="#eee">
+                    </el-switch>
+                </template>
+            </el-table-column>
+            <el-table-column label="剩余时间" min-width="100">
+                <template slot-scope="scope">
+                    <span class="orange">{{ scope.row.timeTemaining }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column>
+                <template slot-scope="scope">
+                    <i class="iconfont icon-remove" @click="cancelBorrowVisible = true"></i>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div class="text-center mt40">
+            <el-button class="wid120">继续申领</el-button>
+            <el-button class="wid120" type="primary">提交申领</el-button>
+        </div>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/reagentApply/storageTrack.js"></script>
+</body>
+</html>
