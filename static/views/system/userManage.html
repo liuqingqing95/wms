@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/system/userManage.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="page-title">用户管理</div>
+        <el-form :class="[shrink ? '' : 'shrink', 'form-search mt20']" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
+            <div>
+                <el-form-item label="用户名" prop="username">
+                    <el-input v-model="searchForm.userName" placeholder="请输入申领人员"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号" prop="phonenumber">
+                    <el-input v-model="searchForm.phoneNumber" placeholder="请输入实验室名称"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email">
+                    <el-input v-model="searchForm.email" placeholder="请输入名称"></el-input>
+                </el-form-item>
+                <el-button type="primary" class="ml15 wid100" icon="el-icon-search" size="small">搜索</el-button>
+                <el-button class="blue-btn reset wid100" size="small" @click="resetForm('searchForm')">重置</el-button>
+            </div>
+            <div>
+                <el-form-item label="实验室" prop="laboratory">
+                    <el-select clearable v-model="searchForm.laboratory" placeholder="请选择状态">
+                        <el-option label="全部" value="3"></el-option>
+                    </el-select>
+                </el-form-item>
+            </div>
+        </el-form>
+        <div class="table-operate mt20">
+            <el-button-group>
+                <el-button class="blue-btn" size="small"><i class="iconfont icon-allocation-user mr5 fs14"></i>配置角色</el-button>
+                <el-button class="blue-btn" size="small"><i class="iconfont icon-allocate mr5 fs14"></i>配置仓库</el-button>
+                <el-button class="blue-btn" size="small"><i class="iconfont icon-laboratory mr5 fs14"></i>配置实验室</el-button>
+            </el-button-group>
+            <div class="part-right">
+                <el-button type="text" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont mr5']"></i>高级搜索</el-button>
+                <el-button-group>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-refresh"></i></el-button>
+                </el-button-group>
+            </div>
+        </div>
+        <el-table :data="userManageData" stripe border class="table mt20 text-center">
+            <el-table-column
+                    type="selection"
+                    width="40">
+            </el-table-column>
+            <el-table-column label="用户名">
+                <template slot-scope="scope">
+                    <div class="user-info text-left">
+                        <img :src="scope.row.img" alt="">
+                        <p>{{ scope.row.userName }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column label="手机">
+                <template slot-scope="scope">
+                    <p class="text-left">{{ scope.row.phoneNumber }}</p>
+                </template>
+            </el-table-column>
+            <el-table-column label="邮箱">
+                <template slot-scope="scope">
+                    {{ scope.row.email }}
+                </template>
+            </el-table-column>
+            <el-table-column label="实验室名称" min-width="130">
+                <template slot-scope="scope">
+                    {{ scope.row.laboratory }}
+                </template>
+            </el-table-column>
+            <el-table-column label="是否锁定">
+                <template slot-scope="scope">
+                    <el-switch
+                            @change="lockChange"
+                            v-model="scope.row.lock"
+                            active-color="#138fff"
+                            inactive-color="#dddddd">
+                    </el-switch>
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-dialog
+                class="dialog1"
+                :title="lockTitle"
+                :visible.sync="lockVisible"
+                width="420px">
+            <div class="warning"><i class="icon-warning"></i>{{lockWarning}}</div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="lockVisible = false" size="small">取 消</el-button>
+                <el-button type="primary" @click="rejectVisible = false" size="small">确 定</el-button>
+            </span>
+        </el-dialog>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/system/userManage.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>超期归还报表</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <!--<link rel="stylesheet" href="../../css/build/reagentApply/borrow.css">-->
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="page-title">我的借用</div>
+        <el-form :class="[shrink ? '' : 'shrink', 'form-search mt20']" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
+            <div>
+                <el-form-item label="申领人员" prop="receiver">
+                    <el-input v-model="searchForm.receiver" placeholder="请输入申领人员"></el-input>
+                </el-form-item>
+                <el-form-item label="实验室" prop="laboratory">
+                    <el-input v-model="searchForm.laboratory" placeholder="请输入实验室名称"></el-input>
+                </el-form-item>
+                <el-form-item label="仓库" prop="warehouse">
+                    <el-select clearable v-model="searchForm.warehouse" placeholder="请选择状态">
+                        <el-option label="全部" value="3"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-button type="primary" class="ml15 wid100" icon="el-icon-search" size="small">搜索</el-button>
+                <el-button class="blue-btn reset wid100" size="small" @click="resetForm('searchForm')">重置</el-button>
+            </div>
+            <div>
+                <el-form-item label="项目" prop="project">
+                    <el-input v-model="searchForm.project" placeholder="请输入名称"></el-input>
+                </el-form-item>
+                <el-form-item label="签收时间">
+                    <el-form-item prop="startTime" class="mr0">
+                        <el-date-picker
+                                v-model="searchForm.startTime"
+                                align="right"
+                                type="date">
+                        </el-date-picker>
+                    </el-form-item>
+                    <span class="ml5 mr5">至</span>
+                    <el-form-item prop="endTime">
+                        <el-date-picker
+                                v-model="searchForm.endTime"
+                                align="right"
+                                type="date">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-form-item>
+            </div>
+        </el-form>
+        <div class="table-operate mt20">
+            <div class="part-right">
+                <el-button type="text" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont mr5']"></i>高级搜索</el-button>
+                <el-button-group>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-refresh"></i></el-button>
+                </el-button-group>
+            </div>
+        </div>
+        <el-table :data="overdueData" stripe border class="table mt20 text-center">
+            <el-table-column
+                    type="selection"
+                    width="40">
+            </el-table-column>
+            <el-table-column label="申领编号" fixed min-width="80">
+                <template slot-scope="scope">
+                    <p class="text-left"><a href="">{{ scope.row.number }}</a></p>
+                </template>
+            </el-table-column>
+            <el-table-column label="试剂条码" fixed min-width="80">
+                <template slot-scope="scope">
+                    <p class="text-left"><a href="">{{ scope.row.reagentNumber }}</a></p>
+                </template>
+            </el-table-column>
+            <el-table-column label="名称" fixed>
+                <template slot-scope="scope">
+                    {{ scope.row.name }}
+                </template>
+            </el-table-column>
+            <el-table-column label="CAS号" min-width="130">
+                <template slot-scope="scope">
+                    {{ scope.row.cas }}
+                </template>
+            </el-table-column>
+            <el-table-column label="申领人">
+                <template slot-scope="scope">
+                    {{ scope.row.receiver}}
+                </template>
+            </el-table-column>
+            <el-table-column label="申领量">
+                <template slot-scope="scope">
+                    {{ scope.row.receiveWeight}}
+                </template>
+            </el-table-column>
+            <el-table-column label="预计用量">
+                <template slot-scope="scope">
+                    {{ scope.row.predictUse}}
+                </template>
+            </el-table-column>
+            <el-table-column label="当前量">
+                <template slot-scope="scope">
+                    {{ scope.row.currentWeight}}
+                </template>
+            </el-table-column>
+            <el-table-column label="规格">
+                <template slot-scope="scope">
+                    {{ scope.row.specification}}
+                </template>
+            </el-table-column>
+            <el-table-column label="仓库">
+                <template slot-scope="scope">
+                    {{ scope.row.warehouse}}
+                </template>
+            </el-table-column>
+            <el-table-column label="货位" min-width="100">
+                <template slot-scope="scope">
+                    {{ scope.row.slotting}}
+                </template>
+            </el-table-column>
+            <el-table-column label="签收日期">
+                <template slot-scope="scope">
+                    {{ scope.row.receiveDate}}
+                </template>
+            </el-table-column>
+            <el-table-column label="项目说明">
+                <template slot-scope="scope">
+                    {{ scope.row.remark}}
+                </template>
+            </el-table-column>
+            <el-table-column label="实验室">
+                <template slot-scope="scope">
+                    {{ scope.row.laboratory}}
+                </template>
+            </el-table-column>
+        </el-table>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/inventory/overdue.js"></script>
+</body>
+</html>

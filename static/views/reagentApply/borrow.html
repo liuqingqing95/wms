@@ -25,8 +25,8 @@
                 <el-form-item label="名称" prop="name">
                     <el-input v-model="searchForm.name" placeholder="请输入名称"></el-input>
                 </el-form-item>
-                <el-button type="primary" class="ml15" icon="el-icon-search" size="small">搜索</el-button>
-                <el-button class="blue-btn reset" size="small" @click="resetForm('searchForm')">重置</el-button>
+                <el-button type="primary" class="ml15 wid100" icon="el-icon-search" size="small">搜索</el-button>
+                <el-button class="blue-btn reset wid100" size="small" @click="resetForm('searchForm')">重置</el-button>
             </div>
             <div>
                 <el-form-item label="状态" prop="status">
@@ -41,7 +41,7 @@
             <el-button class="blue-btn" size="small" @click="returnVisible = true"><i class="iconfont icon-batch-borrow fs14 mr5"></i>归还</el-button>
         </el-button-group>
 
-        <el-table :data="allShareData" stripe border class="table mt20 text-center">
+        <el-table :data="borrowData" stripe border class="table mt20 text-center">
             <el-table-column
                     type="selection"
                     width="40">
