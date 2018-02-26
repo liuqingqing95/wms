@@ -38,9 +38,9 @@
         </el-form>
         <div class="table-operate mt20">
             <el-button-group>
-                <el-button class="blue-btn" size="small"><i class="iconfont icon-allocation-user mr5 fs14"></i>配置角色</el-button>
-                <el-button class="blue-btn" size="small"><i class="iconfont icon-allocate mr5 fs14"></i>配置仓库</el-button>
-                <el-button class="blue-btn" size="small"><i class="iconfont icon-laboratory mr5 fs14"></i>配置实验室</el-button>
+                <el-button class="blue-btn" size="small" @click="configureRoleVisible = true"><i class="iconfont icon-allocation-user mr5 fs14"></i>配置角色</el-button>
+                <el-button class="blue-btn" size="small" @click="warehouseVisible = true"><i class="iconfont icon-allocate mr5 fs14"></i>配置仓库</el-button>
+                <el-button class="blue-btn" size="small" @click="laboratoryVisible = true"><i class="iconfont icon-laboratory mr5 fs14"></i>配置实验室</el-button>
             </el-button-group>
             <div class="part-right">
                 <el-button type="text" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont mr5']"></i>高级搜索</el-button>
@@ -100,6 +100,80 @@
                 <el-button @click="lockVisible = false" size="small">取 消</el-button>
                 <el-button type="primary" @click="rejectVisible = false" size="small">确 定</el-button>
             </span>
+        </el-dialog>
+        <el-dialog title="配置角色" :visible.sync="configureRoleVisible" width="765px">
+            <el-transfer
+                    class="transfer-tree"
+                    v-model="selectedList"
+                    filterable
+                    filter-placeholder="请输入角色名称"
+                    :left-default-checked="['2', '3']"
+                    :right-default-checked="['1']"
+                    :titles="['角色列表', '已选角色']"
+                    :format="{noChecked: '${total}',hasChecked: '${checked}/${total}'}"
+                    @change="transferChange"
+                    :data="roleData">
+            </el-transfer>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="configureRoleVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitConfigureRole('selectedList') ">绑 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="配置仓库" :visible.sync="warehouseVisible" width="765px">
+            <el-transfer
+                    class="transfer-tree"
+                    v-model="selectedWList"
+                    filterable
+                    filter-placeholder="请输入仓库名称"
+                    :left-default-checked="['2', '3']"
+                    :right-default-checked="['1']"
+                    :titles="['角色列表', '已选角色']"
+                    :format="{noChecked: '${total}',hasChecked: '${checked}/${total}'}"
+                    @change="transferChange"
+                    :data="warehouseData">
+            </el-transfer>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="warehouseVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitWarehouse('selectedWList') ">绑 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="配置实验室" :visible.sync="laboratoryVisible" width="480px">
+            <el-form :model="laboratoryForm"
+                     ref="laboratoryForm"
+                     size="medium"
+                     label-width="80px"
+                     inline-message>
+                <el-row>
+                    <el-col :span="23" >
+                        <el-form-item prop="number" label="用户名">
+                           <div class="laboratory">
+                                <el-tag type="success"
+                                        class="mr5"
+                                        :key="item.key"
+                                        v-for="item in laboratoryForm.user"
+                                        closable
+                                        :disable-transitions="true"
+                                        @close="handleTagClose(item)">
+                                    {{item.name}}
+                                </el-tag>
+                           </div>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="23" >
+                        <el-form-item prop="remark" label="实验室" class="mb0">
+                            <el-select clearable v-model="laboratoryForm.selectLaboratory" placeholder="请选择状态">
+                                <el-option :label="item.label" :value="item.value" :key="index+''" v-for="(item, index) in laboratoryForm.laboratory"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="scrapFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitRequestForm('cancelBorrowForm') ">确 定</el-button>
+            </div>
         </el-dialog>
     </template>
 </div>

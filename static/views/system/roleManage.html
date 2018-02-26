@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/system/roleManage.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="page-title">角色管理</div>
+        <div class="table-operate mt20">
+            <el-button type="primary" size="small" @click="role('add')" icon="el-icon-plus">新增</el-button>
+            <el-button-group class="ml10">
+                <el-button class="blue-btn" size="small" @click=""><i class="iconfont icon-edit1 mr5 fs14"></i>编辑</el-button>
+                <el-button class="blue-btn" size="small" @click=""><i class="iconfont icon-allocation-user mr5 fs14"></i>权限配置</el-button>
+                <el-button class="blue-btn" size="small" @click=""><i class="iconfont icon-detail mr5 fs14"></i>查看权限</el-button>
+            </el-button-group>
+            <div class="part-right">
+                <form class="search-box structure">
+                    <el-input placeholder="请输入角色信息" size="small"></el-input>
+                    <el-button type="primary" size="small" icon="el-icon-search"></el-button>
+                </form>
+                <el-button-group>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-refresh"></i></el-button>
+                </el-button-group>
+            </div>
+        </div>
+        <el-table :data="roleData" stripe border class="table mt20 text-center">
+            <el-table-column
+                    type="selection"
+                    width="40">
+            </el-table-column>
+            <el-table-column label="角色名称">
+                <template slot-scope="scope">
+                    <div class="user-info">
+                        <p>{{ scope.row.name }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column label="角色代号">
+                <template slot-scope="scope">
+                    <p>{{ scope.row.role }}</p>
+                </template>
+            </el-table-column>
+            <el-table-column label="角色描述">
+                <template slot-scope="scope">
+                    {{ scope.row.describe }}
+                </template>
+            </el-table-column>
+            <el-table-column label="是否锁定">
+                <template slot-scope="scope">
+                    <el-switch
+                            @change="lockChange(scope.row.lock)"
+                            v-model="scope.row.lock"
+                            active-color="#138fff"
+                            inactive-color="#dddddd">
+                    </el-switch>
+                </template>
+            </el-table-column>
+            <el-table-column label="角色类别">
+                <template slot-scope="scope">
+                    {{ scope.row.type }}
+                </template>
+            </el-table-column>
+            <el-table-column label="">
+                <template slot-scope="scope">
+                    <i class="iconfont icon-edit1" @click="role('edit',scope.row)"></i>
+                </template>
+            </el-table-column>
+        </el-table>
+
+        <el-dialog :title="roleTitle" :visible.sync="roleVisible" width="480px">
+            <el-form :model="roleForm"
+                     ref="roleForm"
+                     size="medium"
+                     label-width="80px"
+                     inline-message>
+                <el-row>
+                    <el-col :span="23" >
+                        <el-form-item prop="name" label="角色名称">
+                            <el-input v-model="roleForm.name" placeholder="请填写角色名称"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="23" >
+                        <el-form-item prop="describe" label="角色描述" class="mb0">
+                            <el-input type="textarea" v-model="roleForm.describe" :maxlength="200" placeholder="请输入角色描述" :rows="6"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="roleForm = false">取 消</el-button>
+                <el-button type="primary" @click="submitRole('roleForm')">确 定</el-button>
+            </div>
+        </el-dialog>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/system/roleManage.js"></script>
+</body>
+</html>
