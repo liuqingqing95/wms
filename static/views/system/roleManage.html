@@ -40,9 +40,7 @@
             </el-table-column>
             <el-table-column label="角色名称">
                 <template slot-scope="scope">
-                    <div class="user-info">
-                        <p>{{ scope.row.name }}</p>
-                    </div>
+                    <p>{{ scope.row.name }}</p>
                 </template>
             </el-table-column>
             <el-table-column label="角色代号">
@@ -105,12 +103,17 @@
         </el-dialog>
         <el-dialog title="配置用户" :visible.sync="configRoleVisible" width="400px">
             <el-tree
+                    ref="tree"
                     :data="configRole"
                     show-checkbox
                     node-key="id"
                     :expand-on-click-node="false"
                     :default-expand-all="true">
             </el-tree>
+            <div slot="footer" class="dialog-footer">
+                <el-button size="small" @click="configRoleVisible = false">取 消</el-button>
+                <el-button size="small" type="primary" @click="getCheckedNodes">确 定</el-button>
+            </div>
         </el-dialog>
     </template>
 </div>

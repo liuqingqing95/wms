@@ -29,7 +29,7 @@ new Vue({
                 title: '新增角色',
                 type: 'add'
             },
-            configRoleVisible: true,
+            configRoleVisible: false,
             configRole: [{
                 id: 1,
                 label: '全部',
@@ -116,6 +116,9 @@ new Vue({
             this.roleVisible = true;
             this.role.type = type
             console.log(row)
+        },
+        getCheckedNodes() {
+            console.log(this.$refs.tree.getCheckedNodes());
         }
     }
 });

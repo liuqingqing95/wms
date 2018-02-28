@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录日志</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="page-title">登录日志</div>
+        <el-form class="table-operate mt20" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
+            <el-form-item label="选择时间" class="time-range unlimit-width">
+                <el-form-item prop="startTime" class="mr0">
+                    <el-date-picker
+                            v-model="searchForm.startTime"
+                            align="right"
+                            type="date"
+                            placeholder="请选择开始时间">
+                    </el-date-picker>
+                </el-form-item>
+                <span class="ml5 fl mr5">至</span>
+                <el-form-item prop="endTime">
+                    <el-date-picker
+                            v-model="searchForm.endTime"
+                            align="right"
+                            type="date"
+                            placeholder="请选择结束时间">
+                    </el-date-picker>
+                </el-form-item>
+            </el-form-item>
+
+            <el-button type="primary" class="ml15 wid100" icon="el-icon-search" size="small">搜索</el-button>
+            <el-button class="blue-btn reset wid100" size="small" @click="resetForm('searchForm')">重置</el-button>
+            <div class="part-right">
+                <el-button-group>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-refresh"></i></el-button>
+                </el-button-group>
+            </div>
+        </el-form>
+        <el-table :data="logData" stripe border class="table mt20 text-center">
+            <el-table-column label="用户">
+                <template slot-scope="scope">
+                    <p>{{ scope.row.name }}</p>
+                </template>
+            </el-table-column>
+            <el-table-column label="登录时间">
+                <template slot-scope="scope">
+                    <p>{{ scope.row.loginTime }}</p>
+                </template>
+            </el-table-column>
+            <el-table-column label="登录IP地址">
+                <template slot-scope="scope">
+                    {{ scope.row.ip }}
+                </template>
+            </el-table-column>
+            <el-table-column label="浏览器及版本号">
+                <template slot-scope="scope">
+                    {{ scope.row.browser }}
+                </template>
+            </el-table-column>
+        </el-table>
+
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/system/loginLog.js"></script>
+</body>
+</html>
