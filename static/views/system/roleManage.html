@@ -15,7 +15,7 @@
     <template>
         <div class="page-title">角色管理</div>
         <div class="table-operate mt20">
-            <el-button type="primary" size="small" @click="role('add')" icon="el-icon-plus">新增</el-button>
+            <el-button type="primary" size="small" @click="roleClick('add')" icon="el-icon-plus">新增</el-button>
             <el-button-group class="ml10">
                 <el-button class="blue-btn" size="small" @click=""><i class="iconfont icon-edit1 mr5 fs14"></i>编辑</el-button>
                 <el-button class="blue-btn" size="small" @click=""><i class="iconfont icon-allocation-user mr5 fs14"></i>权限配置</el-button>
@@ -72,12 +72,12 @@
             </el-table-column>
             <el-table-column label="">
                 <template slot-scope="scope">
-                    <i class="iconfont icon-edit1" @click="role('edit',scope.row)"></i>
+                    <i class="iconfont icon-edit1" @click="roleClick('edit',scope.row)"></i>
                 </template>
             </el-table-column>
         </el-table>
 
-        <el-dialog :title="roleTitle" :visible.sync="roleVisible" width="480px">
+        <el-dialog :title="role.title" :visible.sync="roleVisible" width="480px">
             <el-form :model="roleForm"
                      ref="roleForm"
                      size="medium"
@@ -100,8 +100,17 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="roleForm = false">取 消</el-button>
-                <el-button type="primary" @click="submitRole('roleForm')">确 定</el-button>
+                <el-button type="primary" @click="submitRole(role.type,'roleForm')">确 定</el-button>
             </div>
+        </el-dialog>
+        <el-dialog title="配置用户" :visible.sync="configRoleVisible" width="400px">
+            <el-tree
+                    :data="configRole"
+                    show-checkbox
+                    node-key="id"
+                    :expand-on-click-node="false"
+                    :default-expand-all="true">
+            </el-tree>
         </el-dialog>
     </template>
 </div>
