@@ -1123,3 +1123,16 @@
     bottom: 3px;
   }
 }
+
+.table {
+  .el-table__row {
+    .hover-show {
+      visibility: hidden;
+    }
+    &:hover {
+      .hover-show {
+        visibility: visible;
+      }
+    }
+  }
+}
