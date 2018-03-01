@@ -13,19 +13,19 @@
 <div id="app">
     <template>
         <div class="page-title">试剂入库</div>
-        <el-form :class="[shrink ? '' : 'shrink', 'search-form mt20']" ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="small">
+        <el-form :class="[shrink ? '' : 'shrink', 'search-form mt20']" ref="searchForm" :model="searchForm" label-width="100px" :inline="true" size="small">
             <el-row>
                 <el-col :md="7" :lg="6" :xl="6">
                     <el-form-item label="试剂条码" prop="number">
                         <el-input v-model="searchForm.number" placeholder="请输入试剂条码"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :md="7" :lg="7" :xl="6">
+                <el-col :md="7" :lg="6" :xl="6">
                     <el-form-item label="中文名称" prop="name">
                         <el-input v-model="searchForm.name" placeholder="请输入中文名称"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :md="7" :lg="7" :xl="6">
+                <el-col :md="7" :lg="6" :xl="6">
                     <el-form-item label="CAS号">
                         <el-input v-model="searchForm.cas" placeholder="请输入CAS号"></el-input>
                     </el-form-item>
@@ -45,14 +45,14 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :md="7" :lg="7" :xl="6">
+                <el-col :md="7" :lg="6" :xl="6">
                     <el-form-item label="规格" prop="specification">
                         <el-select clearable v-model="searchForm.specification" placeholder="请选择规格">
                             <el-option label="100" value="3"></el-option>
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :md="7" :lg="7" :xl="6">
+                <el-col :md="7" :lg="6" :xl="6">
                     <el-form-item label="供应商" prop="provider">
                         <el-input v-model="searchForm.provider" placeholder="请输入供应商名称"></el-input>
                     </el-form-item>
@@ -64,12 +64,12 @@
                         <el-input v-model="searchForm.warehouse" placeholder="请选择纯度"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :md="7" :lg="7" :xl="6">
+                <el-col :md="7" :lg="6" :xl="6">
                     <el-form-item label="货位" prop="allocation">
                         <el-input v-model="searchForm.allocation" placeholder="请输入中文名称"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :md="7" :lg="7" :xl="6">
+                <el-col :md="7" :lg="6" :xl="6">
                     <el-form-item label="ICS号" prop="ics">
                         <el-input v-model="searchForm.ics" placeholder="请输入ICS号"></el-input>
                     </el-form-item>
@@ -81,12 +81,12 @@
                         <el-input v-model="searchForm.purchaseNote" placeholder="请输入采购单号"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :md="7" :lg="7" :xl="6">
+                <el-col :md="7" :lg="6" :xl="6">
                     <el-form-item label="批号" prop="batch">
                         <el-input v-model="searchForm.batch" placeholder="请输入批号"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :md="7" :lg="7" :xl="6">
+                <el-col :md="7" :lg="6" :xl="6">
                     <el-form-item label="入库状态" prop="status">
                         <el-select clearable v-model="searchForm.status" >
                             <el-option label="待上架" value="0"></el-option>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>试剂基础信息</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/basicInformation/reagentInfo.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="page-title">试剂入库</div>
+        <el-form :class="[shrink ? '' : 'shrink', 'search-form mt20']" ref="searchForm" :model="searchForm" label-width="100px" :inline="true" size="small">
+            <el-row>
+
+                <el-col :md="7" :lg="6" :xl="6">
+                    <el-form-item label="CAS号">
+                        <el-input v-model="searchForm.cas" placeholder="请输入CAS号"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :md="7" :lg="6" :xl="6">
+                    <el-form-item label="中文名称" prop="name">
+                        <el-input v-model="searchForm.name" placeholder="请输入中文名称"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :md="7" :lg="6" :xl="6">
+                    <el-form-item label="化学名称" prop="chemicalName">
+                        <el-input v-model="searchForm.chemicalName" placeholder="请输入化学名称"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :md="3" :lg="4" :xl="6">
+                    <el-button type="primary" class="ml15" icon="el-icon-search" size="small">搜索</el-button>
+                    <el-button class="blue-btn reset" size="small" @click="resetForm('searchForm')">重置</el-button>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :md="7" :lg="6" :xl="6">
+                    <el-form-item label="类别" prop="type">
+                        <el-select clearable v-model="searchForm.type" placeholder="请选择类别">
+                            <el-option label="全部" value="3"></el-option>
+                            <el-option label="222" value="0"></el-option>
+                            <el-option label="22" value="1"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :md="7" :lg="6" :xl="6">
+                    <el-form-item label="剧毒性质" prop="specification">
+                        <el-select clearable v-model="searchForm.toxic" placeholder="请选择性质">
+                            <el-option label="100" value="3"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :md="7" :lg="6" :xl="6">
+                    <el-form-item label="危险品类别" prop="provider">
+                        <el-select clearable v-model="searchForm.dangerous" placeholder="请选择类别">
+                            <el-option label="全部" value="3"></el-option>
+                            <el-option label="222" value="0"></el-option>
+                            <el-option label="22" value="1"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <div class="table-operate">
+            <el-button type="primary" icon="el-icon-plus" size="small" @click="putInFormVisible = true">新增</el-button>
+            <el-button class="blue-btn" size="small"><i class="iconfont icon-import fs14 mr5"></i>批量导入</el-button>
+
+            <el-button-group class="ml10">
+                <el-button class="blue-btn" size="small"><i class="iconfont icon-edit1 fs14 mr5"></i>编辑</el-button>
+                <el-button class="blue-btn" size="small"><i class="iconfont icon-remove blue mr5 fs14"></i>删除</el-button>
+            </el-button-group>
+
+            <div class="part-right">
+               <form class="search-box structure">
+                    <el-input placeholder="请输入内容" size="small"></el-input>
+                    <el-button type="primary" size="small" icon="el-icon-search"></el-button>
+                </form>
+                <el-button type="text" class="blue-btn mr10" size="small" @click="shrink = !shrink"><i :class="[shrink ? 'icon-shrink' : 'icon-stretch', 'iconfont mr5']"></i>高级搜索</el-button>
+                <el-button-group>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-export"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-filter-field"></i></el-button>
+                    <el-button class="blue-btn" size="small"><i class="iconfont icon-refresh"></i></el-button>
+                </el-button-group>
+            </div>
+        </div>
+        <el-table :data="borrowData" stripe border class="table mt20 text-center">
+            <el-table-column
+                    type="selection"
+                    width="40">
+            </el-table-column>
+            <el-table-column label="结构式" fixed min-width="130">
+                <template slot-scope="scope">
+                    <p class="text-left">
+                        <img class="structure" :src="scope.row.structure" alt="">
+                    </p>
+                </template>
+            </el-table-column>
+            <el-table-column label="化合物名称" fixed>
+                <template slot-scope="scope">
+                    {{ scope.row.name }}
+                </template>
+            </el-table-column>
+            <el-table-column label="CAS号" min-width="130">
+                <template slot-scope="scope">
+                    {{ scope.row.cas }}
+                </template>
+            </el-table-column>
+            <el-table-column label="ICS号">
+                <template slot-scope="scope">
+                    {{ scope.row.ics}}
+                </template>
+            </el-table-column>
+            <el-table-column label="沸点">
+                <template slot-scope="scope">
+                    {{ scope.row.boilingPoint}}
+                </template>
+            </el-table-column>
+            <el-table-column label="熔点">
+                <template slot-scope="scope">
+                    {{ scope.row.meltingPoint}}
+                </template>
+            </el-table-column>
+            <el-table-column label="危险品">
+                <template slot-scope="scope">
+                    {{ scope.row.dangerous}}
+                </template>
+            </el-table-column>
+            <el-table-column label="剧毒" min-width="100">
+                <template slot-scope="scope">
+                    {{ scope.row.toxic}}
+                </template>
+            </el-table-column>
+            <el-table-column label="创建用户">
+                <template slot-scope="scope">
+                    {{ scope.row.createUser }}
+                </template>
+            </el-table-column>
+            <el-table-column label="异体异构体描述">
+                <template slot-scope="scope">
+                    {{ scope.row.describe}}
+                </template>
+            </el-table-column>
+            <el-table-column>
+                <template slot-scope="scope">
+                    <i class="iconfont icon-edit1 mr5 hover-show blue" @click="cancelBorrowVisible = true"></i>
+                    <i class="iconfont icon-remove hover-show" @click="returnVisible = true"></i>
+                </template>
+            </el-table-column>
+        </el-table>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/basicInformation/reagentInfo.js"></script>
+</body>
+</html>
