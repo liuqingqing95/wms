@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统参数设置-消息提醒</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/system/barcodeSetting.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <el-tabs v-model="activeName">
+            <el-tab-pane label="条码设置" name="first"></el-tab-pane>
+            <el-tab-pane label="消息提醒" name="second">
+                <el-table :data="settingData" stripe class="table">
+                    <el-table-column label="名称">
+                        <template slot-scope="scope">
+                            {{ scope.row.name }}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="说明">
+                        <template slot-scope="scope">
+                            {{scope.row.content}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="配置值">
+                        <template slot-scope="scope">
+                            {{scope.row.value}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column  width="120">
+                        <template slot-scope="scope">
+                            <i class="iconfont icon-edit hover-show yellow" @click="openRuleDialog(scope.row)"></i>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="其他设置" name="third">
+            </el-tab-pane>
+        </el-tabs>
+        <el-dialog :title="form.dialogTitle" :visible.sync="dialogVisible" width="480px">
+            <el-form :model="form"
+                     ref="form"
+                     size="medium"
+                     label-width="70px"
+                     inline-message>
+                <el-row>
+                    <el-col :span="22" >
+                        <el-form-item prop="content" label="说明">
+                            <el-input v-model="form.content" disabled></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="22" >
+                        <el-form-item prop="rule" label="配置值">
+                            <div v-if="typeof form.value === 'boolean'">
+                                <el-radio v-model="form.value" :label="true">是</el-radio>
+                                <el-radio class="ml20" v-model="form.value" :label="false">否</el-radio>
+                            </div>
+                            <el-input v-else v-model="form.value"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitSetting('form') ">确 定</el-button>
+            </div>
+        </el-dialog>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/system/notification.js"></script>
+</body>
+</html>

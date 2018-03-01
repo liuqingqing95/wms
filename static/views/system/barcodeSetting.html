@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统参数设置-条码设置</title>
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <link rel="stylesheet" href="../../libs/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../css/build/layout.css">
+    <link rel="stylesheet" href="../../css/build/public.css">
+
+    <link rel="stylesheet" href="../../css/build/system/barcodeSetting.css">
+</head>
+<body>
+<div id="app">
+    <template>
+        <el-tabs v-model="activeName" @tab-click="tabChange">
+            <el-tab-pane label="条码设置" name="first">
+                <el-table :data="barcodeData" stripe class="table">
+                    <el-table-column label="名称">
+                        <template slot-scope="scope">
+                            {{ scope.row.name }}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="说明">
+                        <template slot-scope="scope">
+                           {{scope.row.content}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="配置值">
+                        <template slot-scope="scope">
+                            {{scope.row.label}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column  width="120">
+                        <template slot-scope="scope">
+                            <i v-if="scope.row.type === 1" class="iconfont icon-edit hover-show yellow" @click="barcodeVisible = true"></i>
+                            <i v-if="scope.row.type === 2" class="iconfont icon-edit hover-show yellow" @click="prefixVisible = true"></i>
+                            <i v-if="scope.row.type === 3" class="iconfont icon-edit hover-show yellow" @click="prefixRuleVisible = true"></i>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="消息提醒" name="second">
+            </el-tab-pane>
+            <el-tab-pane label="其他设置" name="third">
+            </el-tab-pane>
+        </el-tabs>
+        <el-dialog title="条码尺寸配置" :visible.sync="barcodeVisible" width="600px">
+            <el-form :model="barcodeForm"
+                     ref="barcodeForm"
+                     :rules="barcodeRules"
+                     size="medium"
+                     label-width="90px"
+                     inline-message>
+                <el-row>
+                    <el-col :span="22" >
+                        <el-form-item prop="content" label="说明">
+                            <el-input v-model="barcodeForm.content" disabled></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="22" >
+                        <el-form-item prop="selectSize" label="条码尺寸">
+                            <el-select clearable v-model="barcodeForm.selectSize" placeholder="请选择条码尺寸">
+                                <el-option :label="item.label" :value="item.value" :key="index+''" v-for="(item, index) in barcodeForm.size"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="22" >
+                       <el-form-item label="条码尺寸"
+                                     class="barcode-size"
+                                     v-for="(item, index) in barcodeForm.newSize"
+                                     :key="item.key">
+                            <el-form-item class="width"
+                                          :prop="'newSize.' + index + '.width'"
+                                          :rules="barcodeRules.width">
+                                <el-input v-model="item.width" class="" placeholder="宽度，单位px"></el-input>
+                            </el-form-item>
+                            <el-form-item
+                                    class="height"
+                                    :prop="'newSize.' + index + '.height'"
+                                    :rules="barcodeRules.height">
+                                <el-input v-model="item.height" class="" placeholder="高度，单位px"></el-input>
+                            </el-form-item>
+                            <i :class="[index ? 'iconfont icon-remove': 'icon-add']" @click="addBarcodeSize($event.currentTarget, index)"></i>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="barcodeVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitBarcodeForm('barcodeForm') ">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="自定义前缀配置" :visible.sync="prefixVisible" width="480px">
+            <el-form :model="prefixForm"
+                     ref="prefixForm"
+                     size="medium"
+                     label-width="90px"
+                     inline-message>
+                <el-row>
+                    <el-col :span="22" >
+                        <el-form-item prop="content" label="说明">
+                            <el-input v-model="prefixForm.content" disabled></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="22" >
+                        <el-form-item prop="value" label="配置值" class="mb0">
+                            <el-input v-model="prefixForm.value"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="prefixVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitPrefixForm('prefixForm') ">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="条码前缀规则配置" :visible.sync="prefixRuleVisible" width="520px">
+            <el-form :model="prefixRule"
+                     ref="prefixRule"
+                     size="medium"
+                     label-width="110px"
+                     inline-message>
+                <el-row>
+                    <el-col :span="22" >
+                        <el-form-item prop="content" label="说明">
+                            <el-input v-model="prefixRule.content" disabled></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="22" >
+                        <el-form-item prop="rule" label="条码前缀规则">
+                            <el-input v-model="prefixRule.rule"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="22" >
+                        <el-form-item prop="rule" class="mb0">
+                            <el-radio v-model="defaultRule" :label="true">是</el-radio>
+                            <el-radio class="ml20" v-model="defaultRule" :label="false">否</el-radio>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="prefixVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitPrefixRule('prefixRule') ">确 定</el-button>
+            </div>
+        </el-dialog>
+    </template>
+</div>
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/vue.js"></script>
+<script src="../../libs/element-ui/lib/index.js"></script>
+
+<script src="../../js/build/system/barcodeSetting.js"></script>
+</body>
+</html>

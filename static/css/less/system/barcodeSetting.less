@@ -1,0 +1,31 @@
+@import "../config.less";
+.el-dialog {
+  .barcode-size {
+    &:after {
+      display: block;
+      content: "";
+      clear: both;
+    }
+    .width, .height {
+      float: left;
+      width: 191px;
+    }
+    .width {
+      margin-right: 10px;
+    }
+    .icon-add {
+      position: absolute;
+      right: 0px;
+      top: 8px;
+      background: url("../../../images/add.png") no-repeat;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+    }
+    .icon-remove {
+      top: 0px;
+      position: absolute;
+      right: 3px;
+    }
+  }
+}
